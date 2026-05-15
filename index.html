@@ -1237,12 +1237,112 @@
 
         function hideConfirmModal() { document.getElementById('confirmModal').classList.add('hidden'); }
 
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwmxCi6I3B5PppwqTvowcZuDZDyx34rj7MEe18aUaEpjdOCrv3ljUJAbGcvUe_tNO3w/exec";
+
+        async function sendDataToSheets() {
+            let payload = {};
+
+            if (currentTab === 'programacao') {
+                const weekVal = document.getElementById('weekNumber').value;
+                let monday = getMondayOfISOWeek(parseInt(weekVal), currentYear);
+
+                let diasAtivos = [];
+                daysOfWeek.forEach((dayName, index) => {
+                    const dayId = dayName.toLowerCase().split('-')[0];
+                    const checkbox = document.getElementById(`check_${dayId}`);
+                    if (checkbox && checkbox.checked) {
+                        const dateForDay = new Date(monday);
+                        dateForDay.setDate(monday.getDate() + index);
+
+                        diasAtivos.push({
+                            dataAplicacao: dateForDay.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }),
+                            nomeDia: dayName,
+                            setor: document.getElementById(`setores_${dayId}`).value,
+                            estufa: document.getElementById(`estufa_${dayId}`).value,
+                            inicio: document.getElementById(`horario_inicio_${dayId}`).value,
+                            fim: document.getElementById(`horario_fim_${dayId}`).value,
+                            produtos: document.getElementById(`produtos_${dayId}`).value,
+                            alvo: document.getElementById(`alvo_${dayId}`).value
+                        });
+                    }
+                });
+
+                payload = {
+                    tipo: "programacao",
+                    semana: weekVal,
+                    local: getPersonName('localSelect', 'localCustom'),
+                    cultura: document.getElementById('culturaSelect').value,
+                    programador: getPersonName('programadorSelect', 'programadorCustom'),
+                    aplicador: getPersonName('aplicadorSelect', 'aplicadorCustom'),
+                    diasAtivos: diasAtivos
+                };
+            } else {
+                const dataVal = document.getElementById('reposicaoData').value;
+                let dateStr = "";
+                if(dataVal) {
+                    const parts = dataVal.split('-');
+                    dateStr = `${parts[2]}/${parts[1]}/${parts[0]}`;
+                }
+
+                let itensReposicao = [];
+                [1, 2, 3, 4].forEach(i => {
+                    if(document.getElementById(`check_caixa${i}`).checked) {
+                        const texto = document.getElementById(`reposicaoCaixa${i}`).value;
+                        const linhas = texto.split('\n').filter(l => l.trim() !== '');
+                        
+                        linhas.forEach(linha => {
+                            let produto = linha.trim();
+                            let quantidade = "";
+                            let unidade = "";
+
+                            // Separa a quantidade e unidade no final da frase automaticamente
+                            const regex = /^(.*?)\s*(\d+(?:\.\d+)?)\s*(kg|g|L|ml|l)$/i;
+                            const match = produto.match(regex);
+                            if (match) {
+                                produto = match[1].trim();
+                                quantidade = match[2];
+                                unidade = match[3];
+                            }
+
+                            itensReposicao.push({
+                                caixa: `Caixa 0${i}`,
+                                produto: produto,
+                                quantidade: quantidade,
+                                unidade: unidade
+                            });
+                        });
+                    }
+                });
+
+                payload = {
+                    tipo: "reposicao",
+                    dataReposicao: dateStr,
+                    volumeLitros: document.getElementById('reposicaoLitros').value,
+                    itensReposicao: itensReposicao
+                };
+            }
+
+            try {
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(payload)
+                });
+            } catch (error) {
+                console.error("Erro ao enviar para a planilha:", error);
+            }
+        }
+
         async function executeSend() {
             hideConfirmModal();
             const btnSpan = document.querySelector('button[onclick="confirmBeforeSend()"] span.hidden.sm\\:inline') || document.querySelector('button[onclick="confirmBeforeSend()"] span');
             const originalText = btnSpan.innerText; 
-            btnSpan.innerText = "Gerando Imagem...";
+            
             try {
+                btnSpan.innerText = "Salvando Planilha...";
+                // Envia os dados para a planilha usando o Apps Script
+                await sendDataToSheets();
+
+                btnSpan.innerText = "Gerando Imagem...";
                 // Seleciona o card correto dependendo da aba ativa
                 const elementId = currentTab === 'programacao' ? 'report-card' : 'report-card-reposicao';
                 const element = document.getElementById(elementId);
