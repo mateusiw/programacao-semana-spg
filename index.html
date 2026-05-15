@@ -76,7 +76,7 @@
             </div>
             <div>
                 <h1 class="text-sm font-bold text-slate-800 leading-tight">SPG SEDE</h1>
-                <p class="text-[10px] text-brand-600 font-bold uppercase tracking-wide">Resumo Semanal de Aplicação</p>
+                <p class="text-[10px] text-brand-600 font-bold uppercase tracking-wide">Planejamento e Reposição</p>
             </div>
         </div>
         <div class="flex gap-2">
@@ -94,10 +94,21 @@
 
     <div class="container mx-auto p-4 flex flex-col lg:flex-row gap-8 mt-4">
         
-        <!-- COLUNA DA ESQUERDA: FORMULÁRIO -->
+        <!-- COLUNA DA ESQUERDA: FORMULÁRIOS -->
         <div class="w-full lg:w-1/2 space-y-4">
 
-            <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200/80">
+            <!-- SISTEMA DE ABAS -->
+            <div class="bg-slate-200/60 p-1.5 rounded-2xl flex gap-1 shadow-sm border border-slate-300/50">
+                <button type="button" onclick="switchTab('programacao')" id="btn-tab-programacao" class="flex-1 py-2.5 px-4 rounded-xl font-bold text-sm bg-white text-brand-600 shadow-sm transition-all flex items-center justify-center gap-2">
+                    <i data-lucide="calendar" class="w-4 h-4"></i> Programação
+                </button>
+                <button type="button" onclick="switchTab('reposicao')" id="btn-tab-reposicao" class="flex-1 py-2.5 px-4 rounded-xl font-bold text-sm text-slate-500 hover:text-slate-800 transition-all flex items-center justify-center gap-2">
+                    <i data-lucide="flask-conical" class="w-4 h-4"></i> Reposição Adubo
+                </button>
+            </div>
+
+            <!-- FORMULÁRIO 1: PROGRAMAÇÃO -->
+            <div id="container-programacao" class="bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200/80 transition-all">
                 <h2 class="text-lg font-black text-slate-800 flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
                     <div class="p-2 bg-brand-50 rounded-xl text-brand-600">
                         <i data-lucide="calendar" class="w-5 h-5"></i>
@@ -113,11 +124,15 @@
                         </div>
                         <div>
                             <label class="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">Local</label>
-                            <select id="localSelect" required onchange="updatePreview()" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm bg-slate-50 focus:bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none font-bold text-slate-700 transition-all shadow-sm cursor-pointer">
+                            <select id="localSelect" required onchange="handlePersonChange('localSelect', 'localCustomContainer'); updatePreview();" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm bg-slate-50 focus:bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none font-bold text-slate-700 transition-all shadow-sm cursor-pointer">
                                 <option value="">Selecione.</option>
                                 <option value="SPG Estufa">SPG Estufa</option>
                                 <option value="SPG Oásis">SPG Oásis</option>
+                                <option value="Outro">Outro</option>
                             </select>
+                            <div id="localCustomContainer" class="hidden mt-3 animate-fade-in-down">
+                                <input type="text" id="localCustom" placeholder="Digite o local..." oninput="updatePreview()" class="w-full p-3.5 border border-brand-300 bg-brand-50 rounded-xl text-sm focus:bg-white focus:ring-4 focus:ring-brand-500/20 focus:border-brand-500 outline-none font-bold text-slate-700 transition-all shadow-sm">
+                            </div>
                         </div>
                         <div>
                             <label class="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">Cultura</label>
@@ -166,51 +181,249 @@
                     </div>
                 </form>
             </div>
+
+            <!-- FORMULÁRIO 2: REPOSIÇÃO DE ADUBO -->
+            <div id="container-reposicao" class="hidden bg-white p-6 sm:p-8 rounded-3xl shadow-sm border border-slate-200/80 transition-all animate-fade-in-down">
+                <h2 class="text-lg font-black text-slate-800 flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
+                    <div class="p-2 bg-brand-50 rounded-xl text-brand-600">
+                        <i data-lucide="flask-conical" class="w-5 h-5"></i>
+                    </div>
+                    Detalhes da Reposição
+                </h2>
+                
+                <form id="reposicaoForm" class="space-y-5">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div>
+                            <label class="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">Data da Reposição</label>
+                            <input type="date" id="reposicaoData" required oninput="updateReposicaoPreview()" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm bg-slate-50 focus:bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none font-bold text-slate-700 transition-all shadow-sm">
+                        </div>
+                        <div>
+                            <label class="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">Volume (Litros)</label>
+                            <input type="number" id="reposicaoLitros" value="100" required oninput="updateReposicaoPreview()" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm bg-slate-50 focus:bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none font-bold text-slate-700 transition-all shadow-sm">
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-100 space-y-5">
+                        <h3 class="text-[13px] font-black text-slate-800 uppercase tracking-widest mb-3 flex items-center justify-between">
+                            Composição das Caixas
+                        </h3>
+                        
+                        <!-- CAIXA 01 -->
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 transition-all" id="card_caixa1">
+                            <div class="flex flex-col gap-3 mb-3">
+                                <label class="text-[13px] font-bold text-brand-700 uppercase tracking-widest flex items-center gap-2 cursor-pointer select-none w-max">
+                                    <input type="checkbox" id="check_caixa1" checked onchange="toggleCaixa(1); updateReposicaoPreview()" class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
+                                    <i data-lucide="package" class="w-4 h-4"></i> Caixa 01
+                                </label>
+                                <div class="flex flex-wrap gap-2 items-center bg-slate-200/50 p-2 rounded-xl border border-slate-200/60">
+                                    <select id="produtoSelect_caixa1" class="flex-1 min-w-[130px] text-[11px] py-2 px-2 bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 rounded-lg outline-none cursor-pointer font-bold transition-colors shadow-sm">
+                                        <option value="">Produto...</option>
+                                    </select>
+                                    <input type="number" step="0.01" id="qtd_caixa1" placeholder="Qtd" class="w-16 text-[11px] py-2 px-2 bg-white text-slate-700 border border-slate-200 rounded-lg outline-none font-bold transition-colors shadow-sm placeholder:text-slate-400">
+                                    <select id="unidade_caixa1" class="w-[60px] text-[11px] py-2 px-1 bg-white text-slate-700 border border-slate-200 rounded-lg outline-none cursor-pointer font-bold transition-colors shadow-sm">
+                                        <option value="kg">kg</option>
+                                        <option value="g">g</option>
+                                        <option value="L">L</option>
+                                        <option value="ml">ml</option>
+                                    </select>
+                                    <button type="button" onclick="addProdutoDetalhado(1)" class="bg-brand-600 hover:bg-brand-700 text-white p-2 rounded-lg transition-all shadow-sm active:scale-95">
+                                        <i data-lucide="plus" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="content_caixa1" class="transition-all">
+                                <textarea id="reposicaoCaixa1" rows="3" oninput="updateReposicaoPreview()" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none transition-all font-medium text-slate-700 shadow-sm resize-none"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- CAIXA 02 -->
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 transition-all" id="card_caixa2">
+                            <div class="flex flex-col gap-3 mb-3">
+                                <label class="text-[13px] font-bold text-brand-700 uppercase tracking-widest flex items-center gap-2 cursor-pointer select-none w-max">
+                                    <input type="checkbox" id="check_caixa2" checked onchange="toggleCaixa(2); updateReposicaoPreview()" class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
+                                    <i data-lucide="package" class="w-4 h-4"></i> Caixa 02
+                                </label>
+                                <div class="flex flex-wrap gap-2 items-center bg-slate-200/50 p-2 rounded-xl border border-slate-200/60">
+                                    <select id="produtoSelect_caixa2" class="flex-1 min-w-[130px] text-[11px] py-2 px-2 bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 rounded-lg outline-none cursor-pointer font-bold transition-colors shadow-sm">
+                                        <option value="">Produto...</option>
+                                    </select>
+                                    <input type="number" step="0.01" id="qtd_caixa2" placeholder="Qtd" class="w-16 text-[11px] py-2 px-2 bg-white text-slate-700 border border-slate-200 rounded-lg outline-none font-bold transition-colors shadow-sm placeholder:text-slate-400">
+                                    <select id="unidade_caixa2" class="w-[60px] text-[11px] py-2 px-1 bg-white text-slate-700 border border-slate-200 rounded-lg outline-none cursor-pointer font-bold transition-colors shadow-sm">
+                                        <option value="kg">kg</option>
+                                        <option value="g">g</option>
+                                        <option value="L">L</option>
+                                        <option value="ml">ml</option>
+                                    </select>
+                                    <button type="button" onclick="addProdutoDetalhado(2)" class="bg-brand-600 hover:bg-brand-700 text-white p-2 rounded-lg transition-all shadow-sm active:scale-95">
+                                        <i data-lucide="plus" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="content_caixa2" class="transition-all">
+                                <textarea id="reposicaoCaixa2" rows="4" oninput="updateReposicaoPreview()" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none transition-all font-medium text-slate-700 shadow-sm resize-none"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- CAIXA 03 -->
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 transition-all" id="card_caixa3">
+                            <div class="flex flex-col gap-3 mb-3">
+                                <label class="text-[13px] font-bold text-brand-700 uppercase tracking-widest flex items-center gap-2 cursor-pointer select-none w-max">
+                                    <input type="checkbox" id="check_caixa3" checked onchange="toggleCaixa(3); updateReposicaoPreview()" class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
+                                    <i data-lucide="package" class="w-4 h-4"></i> Caixa 03
+                                </label>
+                                <div class="flex flex-wrap gap-2 items-center bg-slate-200/50 p-2 rounded-xl border border-slate-200/60">
+                                    <select id="produtoSelect_caixa3" class="flex-1 min-w-[130px] text-[11px] py-2 px-2 bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 rounded-lg outline-none cursor-pointer font-bold transition-colors shadow-sm">
+                                        <option value="">Produto...</option>
+                                    </select>
+                                    <input type="number" step="0.01" id="qtd_caixa3" placeholder="Qtd" class="w-16 text-[11px] py-2 px-2 bg-white text-slate-700 border border-slate-200 rounded-lg outline-none font-bold transition-colors shadow-sm placeholder:text-slate-400">
+                                    <select id="unidade_caixa3" class="w-[60px] text-[11px] py-2 px-1 bg-white text-slate-700 border border-slate-200 rounded-lg outline-none cursor-pointer font-bold transition-colors shadow-sm">
+                                        <option value="kg">kg</option>
+                                        <option value="g">g</option>
+                                        <option value="L">L</option>
+                                        <option value="ml">ml</option>
+                                    </select>
+                                    <button type="button" onclick="addProdutoDetalhado(3)" class="bg-brand-600 hover:bg-brand-700 text-white p-2 rounded-lg transition-all shadow-sm active:scale-95">
+                                        <i data-lucide="plus" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="content_caixa3" class="transition-all">
+                                <textarea id="reposicaoCaixa3" rows="5" oninput="updateReposicaoPreview()" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none transition-all font-medium text-slate-700 shadow-sm resize-none"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- CAIXA 04 -->
+                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 transition-all" id="card_caixa4">
+                            <div class="flex flex-col gap-3 mb-3">
+                                <label class="text-[13px] font-bold text-brand-700 uppercase tracking-widest flex items-center gap-2 cursor-pointer select-none w-max">
+                                    <input type="checkbox" id="check_caixa4" checked onchange="toggleCaixa(4); updateReposicaoPreview()" class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
+                                    <i data-lucide="package" class="w-4 h-4"></i> Caixa 04
+                                </label>
+                                <div class="flex flex-wrap gap-2 items-center bg-slate-200/50 p-2 rounded-xl border border-slate-200/60">
+                                    <select id="produtoSelect_caixa4" class="flex-1 min-w-[130px] text-[11px] py-2 px-2 bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 rounded-lg outline-none cursor-pointer font-bold transition-colors shadow-sm">
+                                        <option value="">Produto...</option>
+                                    </select>
+                                    <input type="number" step="0.01" id="qtd_caixa4" placeholder="Qtd" class="w-16 text-[11px] py-2 px-2 bg-white text-slate-700 border border-slate-200 rounded-lg outline-none font-bold transition-colors shadow-sm placeholder:text-slate-400">
+                                    <select id="unidade_caixa4" class="w-[60px] text-[11px] py-2 px-1 bg-white text-slate-700 border border-slate-200 rounded-lg outline-none cursor-pointer font-bold transition-colors shadow-sm">
+                                        <option value="kg">kg</option>
+                                        <option value="g">g</option>
+                                        <option value="L">L</option>
+                                        <option value="ml">ml</option>
+                                    </select>
+                                    <button type="button" onclick="addProdutoDetalhado(4)" class="bg-brand-600 hover:bg-brand-700 text-white p-2 rounded-lg transition-all shadow-sm active:scale-95">
+                                        <i data-lucide="plus" class="w-4 h-4"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="content_caixa4" class="transition-all">
+                                <textarea id="reposicaoCaixa4" rows="3" oninput="updateReposicaoPreview()" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none transition-all font-medium text-slate-700 shadow-sm resize-none"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
 
-        <!-- COLUNA DA DIREITA: PREVIEW DO RELATÓRIO -->
+        <!-- COLUNA DA DIREITA: PREVIEWS DO RELATÓRIO -->
         <div class="w-full lg:w-1/2 flex flex-col bg-slate-200/50 p-4 rounded-3xl border border-slate-300/50 h-max sticky top-20">
-            <div id="report-card" class="w-full h-auto flex flex-col bg-white relative overflow-hidden rounded-lg shadow-xl border border-slate-200">
-                
-                <!-- HEADER DO PREVIEW -->
-                <div class="pl-6 pr-2 py-6 text-white flex justify-between items-center" style="background: linear-gradient(180deg, #1f2d3d 0%, #111827 100%);">
-                    <div class="flex-1 overflow-hidden">
-                        <h2 id="previewMainTitle" class="text-[14px] sm:text-[15px] font-bold leading-snug text-slate-100 whitespace-nowrap tracking-tight">Planejamento de Nutrição e Fitossanidade</h2>
-                        <h2 id="previewLocalText" class="text-[16px] sm:text-[17px] font-black leading-snug text-white mt-1">Local não informado</h2>
-                        <p id="previewWeekText" class="text-[13px] sm:text-[14px] font-medium text-slate-300 mt-0.5">Aplicações da Semana --</p>
-                        
-                        <div class="h-px bg-slate-500/60 w-full mt-3"></div>
+            
+            <!-- PREVIEW 1: PROGRAMAÇÃO -->
+            <div id="preview-container-programacao" class="w-full">
+                <div id="report-card" class="w-full h-auto flex flex-col bg-white relative overflow-hidden rounded-lg shadow-xl border border-slate-200">
+                    
+                    <!-- HEADER DO PREVIEW -->
+                    <div class="pl-6 pr-2 py-6 text-white flex justify-between items-center" style="background: linear-gradient(180deg, #1f2d3d 0%, #111827 100%);">
+                        <div class="flex-1 overflow-hidden">
+                            <h2 id="previewMainTitle" class="text-[14px] sm:text-[15px] font-bold leading-snug text-slate-100 whitespace-nowrap tracking-tight">Planejamento de Nutrição e Fitossanidade</h2>
+                            <h2 id="previewLocalText" class="text-[16px] sm:text-[17px] font-black leading-snug text-white mt-1">Local não informado</h2>
+                            <p id="previewWeekText" class="text-[13px] sm:text-[14px] font-medium text-slate-300 mt-0.5">Aplicações da Semana --</p>
+                            
+                            <div class="h-px bg-slate-500/60 w-full mt-3"></div>
+                        </div>
+                        <div class="shrink-0 ml-1">
+                            <img src="https://i.imgur.com/xSmARfS.png" alt="Logo SPG" crossorigin="anonymous" class="w-28 h-28 object-contain drop-shadow-md">
+                        </div>
                     </div>
-                    <div class="shrink-0 ml-1">
-                        <img src="https://i.imgur.com/xSmARfS.png" alt="Logo SPG" crossorigin="anonymous" class="w-28 h-28 object-contain drop-shadow-md">
-                    </div>
-                </div>
 
-                <!-- INFO BAR (RESPONSÁVEIS E CULTURA) -->
-                <div class="px-8 py-5 border-b border-slate-200 flex justify-between items-start bg-slate-50/50">
-                    <div>
-                        <h3 class="text-[11px] font-bold text-slate-400 tracking-widest uppercase mb-3">Responsáveis</h3>
-                        <p class="text-[15px] text-slate-600 mb-1.5">Solicitante: <span id="previewProgramador" class="font-bold text-slate-800">--</span></p>
-                        <p class="text-[15px] text-slate-600">Aplicador: <span id="previewAplicador" class="font-bold text-slate-800">--</span></p>
+                    <!-- INFO BAR (RESPONSÁVEIS E CULTURA) -->
+                    <div class="px-8 py-5 border-b border-slate-200 flex justify-between items-start bg-slate-50/50">
+                        <div>
+                            <h3 class="text-[11px] font-bold text-slate-400 tracking-widest uppercase mb-3">Responsáveis</h3>
+                            <p class="text-[15px] text-slate-600 mb-1.5">Solicitante: <span id="previewProgramador" class="font-bold text-slate-800">--</span></p>
+                            <p class="text-[15px] text-slate-600">Aplicador: <span id="previewAplicador" class="font-bold text-slate-800">--</span></p>
+                        </div>
+                        <div class="text-right">
+                            <h3 class="text-[11px] font-bold text-slate-400 tracking-widest uppercase mb-3">Cultura</h3>
+                            <p id="previewCulturaText" class="text-[16px] font-bold text-brand-700 uppercase">--</p>
+                        </div>
                     </div>
-                    <div class="text-right">
-                        <h3 class="text-[11px] font-bold text-slate-400 tracking-widest uppercase mb-3">Cultura</h3>
-                        <p id="previewCulturaText" class="text-[16px] font-bold text-brand-700 uppercase">--</p>
-                    </div>
-                </div>
 
-                <!-- CORPO DO PREVIEW (Dias da Semana) -->
-                <div id="previewContent" class="px-8 py-8 flex flex-col h-auto min-h-[200px] bg-white">
-                    <div class="text-center text-slate-400 text-sm italic py-10 my-auto">
-                        Ative os dias ao lado e preencha a programação para visualizá-la aqui.
+                    <!-- CORPO DO PREVIEW (Dias da Semana) -->
+                    <div id="previewContent" class="px-8 py-8 flex flex-col h-auto min-h-[200px] bg-white">
+                        <div class="text-center text-slate-400 text-sm italic py-10 my-auto">
+                            Ative os dias ao lado e preencha a programação para visualizá-la aqui.
+                        </div>
                     </div>
-                </div>
 
-                <!-- RODAPÉ DA IMAGEM -->
-                <div class="bg-slate-50 px-8 py-4 text-center border-t border-slate-100 shrink-0">
-                    <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">SPG SEDE • Departamento Agrícola</p>
+                    <!-- RODAPÉ DA IMAGEM -->
+                    <div class="bg-slate-50 px-8 py-4 text-center border-t border-slate-100 shrink-0">
+                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">SPG SEDE • Departamento Agrícola</p>
+                    </div>
                 </div>
             </div>
+
+            <!-- PREVIEW 2: REPOSIÇÃO DE ADUBO -->
+            <div id="preview-container-reposicao" class="w-full hidden">
+                <div id="report-card-reposicao" class="w-full h-auto flex flex-col bg-white relative overflow-hidden rounded-lg shadow-xl border border-slate-200">
+                    
+                    <!-- HEADER DO PREVIEW -->
+                    <div class="pl-6 pr-2 py-6 text-white flex justify-between items-center" style="background: linear-gradient(180deg, #1f2d3d 0%, #111827 100%);">
+                        <div class="flex-1 overflow-hidden">
+                            <h2 id="previewRepMainTitle" class="text-[14px] sm:text-[15px] font-bold leading-snug text-slate-100 whitespace-nowrap tracking-tight">Registro de Insumos</h2>
+                            <h2 id="previewRepTitleText" class="text-[16px] sm:text-[17px] font-black leading-snug text-white mt-1">Reposição de Adubo</h2>
+                            <p id="previewRepDateText" class="text-[13px] sm:text-[14px] font-medium text-slate-300 mt-0.5">Data: --/--/----</p>
+                            
+                            <div class="h-px bg-slate-500/60 w-full mt-3"></div>
+                        </div>
+                        <div class="shrink-0 ml-1">
+                            <img src="https://i.imgur.com/xSmARfS.png" alt="Logo SPG" crossorigin="anonymous" class="w-28 h-28 object-contain drop-shadow-md">
+                        </div>
+                    </div>
+
+                    <!-- CORPO DO PREVIEW -->
+                    <div class="px-8 py-8 flex flex-col h-auto min-h-[200px] bg-white">
+                        <h3 id="previewRepLitrosTitle" class="text-[16px] font-black text-slate-800 mb-5 border-b border-slate-100 pb-3">Adubação para caixa de 100L.</h3>
+                        
+                        <div class="space-y-4">
+                            <div id="container_previewRepCaixa1" class="bg-slate-50/80 rounded-xl p-5 border border-slate-200">
+                                <h4 class="text-[14px] font-bold text-brand-700 mb-2">Caixa 01.</h4>
+                                <div id="previewRepCaixa1" class="whitespace-pre-line text-[15px] font-medium text-slate-700 leading-relaxed"></div>
+                            </div>
+                            
+                            <div id="container_previewRepCaixa2" class="bg-slate-50/80 rounded-xl p-5 border border-slate-200">
+                                <h4 class="text-[14px] font-bold text-brand-700 mb-2">Caixa 02</h4>
+                                <div id="previewRepCaixa2" class="whitespace-pre-line text-[15px] font-medium text-slate-700 leading-relaxed"></div>
+                            </div>
+                            
+                            <div id="container_previewRepCaixa3" class="bg-slate-50/80 rounded-xl p-5 border border-slate-200">
+                                <h4 class="text-[14px] font-bold text-brand-700 mb-2">Caixa 03.</h4>
+                                <div id="previewRepCaixa3" class="whitespace-pre-line text-[15px] font-medium text-slate-700 leading-relaxed"></div>
+                            </div>
+                            
+                            <div id="container_previewRepCaixa4" class="bg-slate-50/80 rounded-xl p-5 border border-slate-200">
+                                <h4 class="text-[14px] font-bold text-brand-700 mb-2">Caixa 04.</h4>
+                                <div id="previewRepCaixa4" class="whitespace-pre-line text-[15px] font-medium text-slate-700 leading-relaxed"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RODAPÉ DA IMAGEM -->
+                    <div class="bg-slate-50 px-8 py-4 text-center border-t border-slate-100 shrink-0">
+                        <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">SPG SEDE • Departamento Agrícola</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -222,7 +435,7 @@
             </div>
             <h3 class="text-xl font-black text-slate-800 text-center">Gerar Relatório?</h3>
             <p class="text-sm text-slate-500 mt-3 text-center leading-relaxed font-medium">
-                O planejamento da semana será transformado em uma imagem e texto formatado pronto para envio.<br><br>
+                Os dados preenchidos serão transformados em uma imagem e texto formatado pronto para envio.<br><br>
             </p>
             <div class="grid grid-cols-2 gap-3 mt-6">
                 <button onclick="hideConfirmModal()" class="px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold rounded-xl text-sm transition-colors uppercase">
@@ -303,6 +516,7 @@
         const currentYear = new Date().getFullYear();
         
         let currentWeekNumber = 1;
+        let currentTab = 'programacao';
 
         document.addEventListener("DOMContentLoaded", () => {
             lucide.createIcons();
@@ -310,16 +524,65 @@
             currentWeekNumber = getISOWeekNumber(today);
             
             document.getElementById('weekNumber').value = currentWeekNumber;
+            // Define data de hoje na reposição por padrão
+            document.getElementById('reposicaoData').value = today.toISOString().split('T')[0];
             
             renderDaysForm();
             updateAlvosOptions();
+            
+            // Popula os selects das caixas de reposição
+            const prodOptions = generateProductOptions();
+            ['caixa1', 'caixa2', 'caixa3', 'caixa4'].forEach(caixa => {
+                const sel = document.getElementById(`produtoSelect_${caixa}`);
+                if(sel) sel.innerHTML = prodOptions;
+            });
             
             // Carregar dados salvos do localStorage
             loadFromLocalStorage();
             
             updateDayLabels();
             updatePreview();
+            updateReposicaoPreview();
         });
+
+        // ==========================================
+        // SISTEMA DE ABAS
+        // ==========================================
+        function switchTab(tab) {
+            currentTab = tab;
+            const btnProg = document.getElementById('btn-tab-programacao');
+            const btnRep = document.getElementById('btn-tab-reposicao');
+            
+            const contProg = document.getElementById('container-programacao');
+            const contRep = document.getElementById('container-reposicao');
+            
+            const prevProg = document.getElementById('preview-container-programacao');
+            const prevRep = document.getElementById('preview-container-reposicao');
+
+            if (tab === 'programacao') {
+                // Ativar Botão Programação
+                btnProg.className = "flex-1 py-2.5 px-4 rounded-xl font-bold text-sm bg-white text-brand-600 shadow-sm transition-all flex items-center justify-center gap-2";
+                // Desativar Botão Reposição
+                btnRep.className = "flex-1 py-2.5 px-4 rounded-xl font-bold text-sm text-slate-500 hover:text-slate-800 transition-all flex items-center justify-center gap-2";
+                
+                contProg.classList.remove('hidden');
+                contRep.classList.add('hidden');
+                
+                prevProg.classList.remove('hidden');
+                prevRep.classList.add('hidden');
+            } else {
+                // Ativar Botão Reposição
+                btnRep.className = "flex-1 py-2.5 px-4 rounded-xl font-bold text-sm bg-white text-brand-600 shadow-sm transition-all flex items-center justify-center gap-2";
+                // Desativar Botão Programação
+                btnProg.className = "flex-1 py-2.5 px-4 rounded-xl font-bold text-sm text-slate-500 hover:text-slate-800 transition-all flex items-center justify-center gap-2";
+                
+                contProg.classList.add('hidden');
+                contRep.classList.remove('hidden');
+                
+                prevProg.classList.add('hidden');
+                prevRep.classList.remove('hidden');
+            }
+        }
 
         // ==========================================
         // FUNÇÕES DE LOCALSTORAGE E LIMPEZA
@@ -327,14 +590,27 @@
         
         function saveToLocalStorage() {
             const data = {
+                // Dados Programação
                 weekNumber: document.getElementById('weekNumber').value,
                 local: document.getElementById('localSelect').value,
+                localCustom: document.getElementById('localCustom').value,
                 cultura: document.getElementById('culturaSelect').value,
                 programador: document.getElementById('programadorSelect').value,
                 programadorCustom: document.getElementById('programadorCustom').value,
                 aplicador: document.getElementById('aplicadorSelect').value,
                 aplicadorCustom: document.getElementById('aplicadorCustom').value,
-                days: {}
+                days: {},
+                // Dados Reposição
+                reposicaoData: document.getElementById('reposicaoData').value,
+                reposicaoLitros: document.getElementById('reposicaoLitros').value,
+                checkCaixa1: document.getElementById('check_caixa1').checked,
+                checkCaixa2: document.getElementById('check_caixa2').checked,
+                checkCaixa3: document.getElementById('check_caixa3').checked,
+                checkCaixa4: document.getElementById('check_caixa4').checked,
+                reposicaoCaixa1: document.getElementById('reposicaoCaixa1').value,
+                reposicaoCaixa2: document.getElementById('reposicaoCaixa2').value,
+                reposicaoCaixa3: document.getElementById('reposicaoCaixa3').value,
+                reposicaoCaixa4: document.getElementById('reposicaoCaixa4').value
             };
 
             daysOfWeek.forEach(day => {
@@ -361,8 +637,13 @@
                 try {
                     const data = JSON.parse(savedData);
                     
+                    // Restaurar Programação
                     if(data.weekNumber) document.getElementById('weekNumber').value = data.weekNumber;
-                    if(data.local) document.getElementById('localSelect').value = data.local;
+                    if(data.local) {
+                        document.getElementById('localSelect').value = data.local;
+                        handlePersonChange('localSelect', 'localCustomContainer');
+                    }
+                    if(data.localCustom) document.getElementById('localCustom').value = data.localCustom;
                     
                     if(data.cultura) {
                         document.getElementById('culturaSelect').value = data.cultura;
@@ -380,6 +661,20 @@
                         handlePersonChange('aplicadorSelect', 'aplicadorCustomContainer');
                     }
                     if(data.aplicadorCustom) document.getElementById('aplicadorCustom').value = data.aplicadorCustom;
+
+                    // Restaurar Reposição
+                    if(data.reposicaoData) document.getElementById('reposicaoData').value = data.reposicaoData;
+                    if(data.reposicaoLitros) document.getElementById('reposicaoLitros').value = data.reposicaoLitros;
+                    
+                    if(data.checkCaixa1 !== undefined) { document.getElementById('check_caixa1').checked = data.checkCaixa1; toggleCaixa(1); }
+                    if(data.checkCaixa2 !== undefined) { document.getElementById('check_caixa2').checked = data.checkCaixa2; toggleCaixa(2); }
+                    if(data.checkCaixa3 !== undefined) { document.getElementById('check_caixa3').checked = data.checkCaixa3; toggleCaixa(3); }
+                    if(data.checkCaixa4 !== undefined) { document.getElementById('check_caixa4').checked = data.checkCaixa4; toggleCaixa(4); }
+
+                    if(data.reposicaoCaixa1) document.getElementById('reposicaoCaixa1').value = data.reposicaoCaixa1;
+                    if(data.reposicaoCaixa2) document.getElementById('reposicaoCaixa2').value = data.reposicaoCaixa2;
+                    if(data.reposicaoCaixa3) document.getElementById('reposicaoCaixa3').value = data.reposicaoCaixa3;
+                    if(data.reposicaoCaixa4) document.getElementById('reposicaoCaixa4').value = data.reposicaoCaixa4;
 
                     if (data.days) {
                         Object.keys(data.days).forEach(dayId => {
@@ -417,8 +712,9 @@
             // Remove o localstorage
             localStorage.removeItem('planejamentoSPG_data');
             
-            // Limpa o form nativo
+            // Limpa os forms nativos
             document.getElementById('planningForm').reset();
+            document.getElementById('reposicaoForm').reset();
             
             // Desmarca todos os checkboxes de dias e oculta os containers
             daysOfWeek.forEach(day => {
@@ -430,18 +726,34 @@
                 }
             });
 
-            // Reseta a semana pra semana atual
+            // Reseta a semana e data pra atuais
             const today = new Date();
             currentWeekNumber = getISOWeekNumber(today);
             document.getElementById('weekNumber').value = currentWeekNumber;
+            document.getElementById('reposicaoData').value = today.toISOString().split('T')[0];
+            document.getElementById('reposicaoLitros').value = "100";
+
+            // Restaura caixas de reposição para padrão (todas ativas)
+            [1, 2, 3, 4].forEach(i => {
+                document.getElementById(`check_caixa${i}`).checked = true;
+                toggleCaixa(i);
+            });
+
+            // Limpa os textos das caixas
+            document.getElementById('reposicaoCaixa1').value = "";
+            document.getElementById('reposicaoCaixa2').value = "";
+            document.getElementById('reposicaoCaixa3').value = "";
+            document.getElementById('reposicaoCaixa4').value = "";
             
             // Esconde os campos de digitação customizados se estiverem abertos
+            handlePersonChange('localSelect', 'localCustomContainer');
             handlePersonChange('programadorSelect', 'programadorCustomContainer');
             handlePersonChange('aplicadorSelect', 'aplicadorCustomContainer');
 
             // Atualiza tudo
             updateDayLabels();
             updatePreview();
+            updateReposicaoPreview();
             
             hideClearConfirmModal();
             showMessageModal("Sucesso", "O formulário foi limpo com sucesso.", "success");
@@ -617,22 +929,63 @@
             }
         }
 
-        function addSelectedProduct(selectElement, textareaId) {
+        function addProdutoDetalhado(caixaId) {
+            const prodSelect = document.getElementById(`produtoSelect_caixa${caixaId}`);
+            const qtdInput = document.getElementById(`qtd_caixa${caixaId}`);
+            const undSelect = document.getElementById(`unidade_caixa${caixaId}`);
+            const textarea = document.getElementById(`reposicaoCaixa${caixaId}`);
+
+            const prod = prodSelect.value;
+            const qtd = qtdInput.value;
+            const und = undSelect.value;
+
+            if (!prod) return;
+
+            let textToAdd = prod;
+            if (qtd) {
+                textToAdd += ` ${qtd}${und}`;
+            }
+
+            let currentText = textarea.value.trim();
+            if (currentText.length > 0) {
+                textarea.value = currentText + "\n" + textToAdd;
+            } else {
+                textarea.value = textToAdd;
+            }
+
+            // reseta os campos após adicionar
+            prodSelect.value = '';
+            qtdInput.value = '';
+            undSelect.value = 'kg';
+
+            updateReposicaoPreview();
+        }
+
+        function addSelectedProduct(selectElement, textareaId, isReposicao = false) {
             const val = selectElement.value;
             if (!val) return;
             const textarea = document.getElementById(textareaId);
             let currentText = textarea.value.trim();
             if (currentText.length > 0) {
-                if (currentText.endsWith(' e') || currentText.endsWith(',')) {
-                     textarea.value = currentText + " " + val;
+                if (isReposicao) {
+                    textarea.value = currentText + "\n" + val;
                 } else {
-                     textarea.value = currentText + ", " + val;
+                    if (currentText.endsWith(' e') || currentText.endsWith(',')) {
+                         textarea.value = currentText + " " + val;
+                    } else {
+                         textarea.value = currentText + ", " + val;
+                    }
                 }
             } else {
                 textarea.value = val;
             }
             selectElement.value = '';
-            updatePreview();
+            
+            if (isReposicao) {
+                updateReposicaoPreview();
+            } else {
+                updatePreview();
+            }
         }
 
         function updateAlvosOptions() {
@@ -686,11 +1039,78 @@
             return selectEl ? selectEl.value.trim() : '';
         }
 
+        function toggleCaixa(id) {
+            const isChecked = document.getElementById(`check_caixa${id}`).checked;
+            const content = document.getElementById(`content_caixa${id}`);
+            const card = document.getElementById(`card_caixa${id}`);
+            
+            if (isChecked) {
+                content.classList.remove('hidden');
+                card.classList.remove('opacity-60', 'bg-slate-100');
+                card.classList.add('bg-slate-50');
+            } else {
+                content.classList.add('hidden');
+                card.classList.remove('bg-slate-50');
+                card.classList.add('opacity-60', 'bg-slate-100');
+            }
+        }
+
         let preparedShareData = null;
+
+        function updateReposicaoPreview() {
+            const dataVal = document.getElementById('reposicaoData').value;
+            const litros = document.getElementById('reposicaoLitros').value || '100';
+            
+            const active1 = document.getElementById('check_caixa1').checked;
+            const active2 = document.getElementById('check_caixa2').checked;
+            const active3 = document.getElementById('check_caixa3').checked;
+            const active4 = document.getElementById('check_caixa4').checked;
+
+            const caixa1 = document.getElementById('reposicaoCaixa1').value;
+            const caixa2 = document.getElementById('reposicaoCaixa2').value;
+            const caixa3 = document.getElementById('reposicaoCaixa3').value;
+            const caixa4 = document.getElementById('reposicaoCaixa4').value;
+            
+            let dateStr = "--/--/----";
+            if(dataVal) {
+                const parts = dataVal.split('-');
+                dateStr = `${parts[2]}/${parts[1]}/${parts[0]}`;
+            }
+
+            document.getElementById('previewRepDateText').innerText = `Data: ${dateStr}`;
+            document.getElementById('previewRepLitrosTitle').innerText = `Adubação para caixa de ${litros}L.`;
+            
+            // Controle de visibilidade das caixas no preview
+            document.getElementById('container_previewRepCaixa1').classList.toggle('hidden', !active1);
+            document.getElementById('container_previewRepCaixa2').classList.toggle('hidden', !active2);
+            document.getElementById('container_previewRepCaixa3').classList.toggle('hidden', !active3);
+            document.getElementById('container_previewRepCaixa4').classList.toggle('hidden', !active4);
+
+            document.getElementById('previewRepCaixa1').innerText = caixa1 || '--';
+            document.getElementById('previewRepCaixa2').innerText = caixa2 || '--';
+            document.getElementById('previewRepCaixa3').innerText = caixa3 || '--';
+            document.getElementById('previewRepCaixa4').innerText = caixa4 || '--';
+
+            let textToShare = `*Reposição ${dateStr}*\n\nAdubação para caixa de ${litros}L.\n`;
+            if(active1) textToShare += `*Caixas 01.*\n${caixa1}\n`;
+            if(active2) textToShare += `*Caixa 02*\n${caixa2}\n`;
+            if(active3) textToShare += `*Caixa 03.*\n${caixa3}\n`;
+            if(active4) textToShare += `*Caixa 04.*\n${caixa4}`;
+
+            // Só atualiza os dados de compartilhamento se estivermos na aba de reposição
+            if (currentTab === 'reposicao') {
+                preparedShareData = {
+                    shareText: textToShare.trim(),
+                    filename: `Reposicao_Adubo_${dateStr.replace(/\//g, '-')}.png`
+                };
+            }
+
+            saveToLocalStorage();
+        }
 
         function updatePreview() {
             const weekNumber = document.getElementById('weekNumber').value || currentWeekNumber;
-            const local = document.getElementById('localSelect').value;
+            const local = getPersonName('localSelect', 'localCustom');
             const cultura = document.getElementById('culturaSelect').value;
             const programador = getPersonName('programadorSelect', 'programadorCustom');
             const aplicador = getPersonName('aplicadorSelect', 'aplicadorCustom');
@@ -788,22 +1208,29 @@
             }
             lucide.createIcons();
 
-            preparedShareData = {
-                shareText: textToShare.trim(),
-                filename: `Planejamento_Semana_${weekNumber}.png`
-            };
+            // Só atualiza os dados de compartilhamento se estivermos na aba de programação
+            if (currentTab === 'programacao') {
+                preparedShareData = {
+                    shareText: textToShare.trim(),
+                    filename: `Planejamento_Semana_${weekNumber}.png`
+                };
+            }
 
-            // Salva o estado atual no localStorage sempre que a preview é atualizada
             saveToLocalStorage();
         }
 
         function confirmBeforeSend() {
-            const form = document.getElementById('planningForm');
+            const formId = currentTab === 'programacao' ? 'planningForm' : 'reposicaoForm';
+            const form = document.getElementById(formId);
+            
             if (!form.checkValidity()) {
                 form.reportValidity();
                 return;
             }
-            updatePreview();
+            
+            if (currentTab === 'programacao') updatePreview();
+            else updateReposicaoPreview();
+            
             document.getElementById('confirmModal').classList.remove('hidden'); 
             lucide.createIcons(); 
         }
@@ -816,14 +1243,17 @@
             const originalText = btnSpan.innerText; 
             btnSpan.innerText = "Gerando Imagem...";
             try {
-                const element = document.getElementById('report-card');
+                // Seleciona o card correto dependendo da aba ativa
+                const elementId = currentTab === 'programacao' ? 'report-card' : 'report-card-reposicao';
+                const element = document.getElementById(elementId);
+                
                 const canvas = await html2canvas(element, { 
                     scale: 5,
                     useCORS: true, 
                     backgroundColor: null,
                     onclone: (doc) => {
                         doc.documentElement.style.fontSize = '20px'; 
-                        const el = doc.getElementById('report-card'); 
+                        const el = doc.getElementById(elementId); 
                         if (el) { 
                             el.style.width = '800px'; 
                             el.style.maxWidth = '800px'; 
@@ -833,21 +1263,21 @@
                             el.style.boxShadow = 'none';
                         }
                         
-                        // Aumenta a fonte do cabeçalho exclusivamente na imagem gerada
+                        // Aumenta a fonte do cabeçalho exclusivamente na imagem gerada (Programação)
                         const mainTitle = doc.getElementById('previewMainTitle');
                         if (mainTitle) mainTitle.style.fontSize = '24px';
-                        
                         const localText = doc.getElementById('previewLocalText');
-                        if (localText) {
-                            localText.style.fontSize = '30px';
-                            localText.style.marginTop = '6px';
-                        }
-                        
+                        if (localText) { localText.style.fontSize = '30px'; localText.style.marginTop = '6px'; }
                         const weekText = doc.getElementById('previewWeekText');
-                        if (weekText) {
-                            weekText.style.fontSize = '18px';
-                            weekText.style.marginTop = '6px';
-                        }
+                        if (weekText) { weekText.style.fontSize = '18px'; weekText.style.marginTop = '6px'; }
+
+                        // Aumenta a fonte do cabeçalho na imagem gerada (Reposição)
+                        const repMainTitle = doc.getElementById('previewRepMainTitle');
+                        if (repMainTitle) repMainTitle.style.fontSize = '24px';
+                        const repTitleText = doc.getElementById('previewRepTitleText');
+                        if (repTitleText) { repTitleText.style.fontSize = '30px'; repTitleText.style.marginTop = '6px'; }
+                        const repDateText = doc.getElementById('previewRepDateText');
+                        if (repDateText) { repDateText.style.fontSize = '18px'; repDateText.style.marginTop = '6px'; }
                     }
                 });
                 preparedShareData.dataUrl = canvas.toDataURL('image/png');
