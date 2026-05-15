@@ -192,14 +192,10 @@
                 </h2>
                 
                 <form id="reposicaoForm" class="space-y-5">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div class="grid grid-cols-1 gap-5">
                         <div>
                             <label class="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">Data da Reposição</label>
-                            <input type="date" id="reposicaoData" required oninput="updateReposicaoPreview()" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm bg-slate-50 focus:bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none font-bold text-slate-700 transition-all shadow-sm">
-                        </div>
-                        <div>
-                            <label class="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">Volume (Litros)</label>
-                            <input type="number" id="reposicaoLitros" value="100" required oninput="updateReposicaoPreview()" class="w-full p-3.5 border border-slate-200 rounded-xl text-sm bg-slate-50 focus:bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none font-bold text-slate-700 transition-all shadow-sm">
+                            <input type="date" id="reposicaoData" required oninput="updateReposicaoPreview()" class="w-full sm:w-1/2 p-3.5 border border-slate-200 rounded-xl text-sm bg-slate-50 focus:bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none font-bold text-slate-700 transition-all shadow-sm">
                         </div>
                     </div>
 
@@ -210,113 +206,101 @@
                         
                         <!-- CAIXA 01 -->
                         <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 transition-all" id="card_caixa1">
-                            <div class="flex flex-col gap-3 mb-3">
-                                <label class="text-[13px] font-bold text-brand-700 uppercase tracking-widest flex items-center gap-2 cursor-pointer select-none w-max">
-                                    <input type="checkbox" id="check_caixa1" checked onchange="toggleCaixa(1); updateReposicaoPreview()" class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
-                                    <i data-lucide="package" class="w-4 h-4"></i> Caixa 01
-                                </label>
-                                <div class="flex flex-wrap gap-2 items-center bg-slate-200/50 p-2 rounded-xl border border-slate-200/60">
-                                    <select id="produtoSelect_caixa1" class="flex-1 min-w-[130px] text-[11px] py-2 px-2 bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 rounded-lg outline-none cursor-pointer font-bold transition-colors shadow-sm">
-                                        <option value="">Produto...</option>
-                                    </select>
-                                    <input type="number" step="0.01" id="qtd_caixa1" placeholder="Qtd" class="w-16 text-[11px] py-2 px-2 bg-white text-slate-700 border border-slate-200 rounded-lg outline-none font-bold transition-colors shadow-sm placeholder:text-slate-400">
-                                    <select id="unidade_caixa1" class="w-[60px] text-[11px] py-2 px-1 bg-white text-slate-700 border border-slate-200 rounded-lg outline-none cursor-pointer font-bold transition-colors shadow-sm">
-                                        <option value="kg">kg</option>
-                                        <option value="g">g</option>
-                                        <option value="L">L</option>
-                                        <option value="ml">ml</option>
-                                    </select>
-                                    <button type="button" onclick="addProdutoDetalhado(1)" class="bg-brand-600 hover:bg-brand-700 text-white p-2 rounded-lg transition-all shadow-sm active:scale-95">
-                                        <i data-lucide="plus" class="w-4 h-4"></i>
-                                    </button>
+                            <div class="flex flex-col gap-3 mb-3 border-b border-slate-200/60 pb-3">
+                                <div class="flex justify-between items-center w-full">
+                                    <label class="text-[13px] font-bold text-brand-700 uppercase tracking-widest flex items-center gap-2 cursor-pointer select-none">
+                                        <input type="checkbox" id="check_caixa1" checked onchange="toggleCaixa(1); updateReposicaoPreview()" class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
+                                        <i data-lucide="package" class="w-4 h-4"></i> Caixa 01
+                                    </label>
+                                    <div class="flex items-center gap-2">
+                                        <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Volume:</label>
+                                        <div class="relative">
+                                            <input type="number" id="volume_caixa1" value="100" required oninput="updateReposicaoPreview()" class="w-20 p-2 pl-3 pr-6 border border-slate-200 rounded-lg text-xs bg-white focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none font-bold text-slate-700 transition-all shadow-sm text-right">
+                                            <span class="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 pointer-events-none">L</span>
+                                        </div>
+                                    </div>
                                 </div>
+                                <button type="button" onclick="addProductRow('produtos_caixa1')" class="bg-white hover:bg-slate-100 text-brand-600 border border-slate-200 p-2 rounded-lg transition-all shadow-sm active:scale-95 flex items-center justify-center gap-2 text-xs font-bold w-full">
+                                    <i data-lucide="plus" class="w-4 h-4"></i> Adicionar Produto
+                                </button>
                             </div>
                             <div id="content_caixa1" class="transition-all">
-                                <textarea id="reposicaoCaixa1" rows="3" oninput="updateReposicaoPreview()" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none transition-all font-medium text-slate-700 shadow-sm resize-none"></textarea>
+                                <div id="produtos_caixa1" class="space-y-2 min-h-[40px]"></div>
                             </div>
                         </div>
 
                         <!-- CAIXA 02 -->
                         <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 transition-all" id="card_caixa2">
-                            <div class="flex flex-col gap-3 mb-3">
-                                <label class="text-[13px] font-bold text-brand-700 uppercase tracking-widest flex items-center gap-2 cursor-pointer select-none w-max">
-                                    <input type="checkbox" id="check_caixa2" checked onchange="toggleCaixa(2); updateReposicaoPreview()" class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
-                                    <i data-lucide="package" class="w-4 h-4"></i> Caixa 02
-                                </label>
-                                <div class="flex flex-wrap gap-2 items-center bg-slate-200/50 p-2 rounded-xl border border-slate-200/60">
-                                    <select id="produtoSelect_caixa2" class="flex-1 min-w-[130px] text-[11px] py-2 px-2 bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 rounded-lg outline-none cursor-pointer font-bold transition-colors shadow-sm">
-                                        <option value="">Produto...</option>
-                                    </select>
-                                    <input type="number" step="0.01" id="qtd_caixa2" placeholder="Qtd" class="w-16 text-[11px] py-2 px-2 bg-white text-slate-700 border border-slate-200 rounded-lg outline-none font-bold transition-colors shadow-sm placeholder:text-slate-400">
-                                    <select id="unidade_caixa2" class="w-[60px] text-[11px] py-2 px-1 bg-white text-slate-700 border border-slate-200 rounded-lg outline-none cursor-pointer font-bold transition-colors shadow-sm">
-                                        <option value="kg">kg</option>
-                                        <option value="g">g</option>
-                                        <option value="L">L</option>
-                                        <option value="ml">ml</option>
-                                    </select>
-                                    <button type="button" onclick="addProdutoDetalhado(2)" class="bg-brand-600 hover:bg-brand-700 text-white p-2 rounded-lg transition-all shadow-sm active:scale-95">
-                                        <i data-lucide="plus" class="w-4 h-4"></i>
-                                    </button>
+                            <div class="flex flex-col gap-3 mb-3 border-b border-slate-200/60 pb-3">
+                                <div class="flex justify-between items-center w-full">
+                                    <label class="text-[13px] font-bold text-brand-700 uppercase tracking-widest flex items-center gap-2 cursor-pointer select-none">
+                                        <input type="checkbox" id="check_caixa2" checked onchange="toggleCaixa(2); updateReposicaoPreview()" class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
+                                        <i data-lucide="package" class="w-4 h-4"></i> Caixa 02
+                                    </label>
+                                    <div class="flex items-center gap-2">
+                                        <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Volume:</label>
+                                        <div class="relative">
+                                            <input type="number" id="volume_caixa2" value="100" required oninput="updateReposicaoPreview()" class="w-20 p-2 pl-3 pr-6 border border-slate-200 rounded-lg text-xs bg-white focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none font-bold text-slate-700 transition-all shadow-sm text-right">
+                                            <span class="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 pointer-events-none">L</span>
+                                        </div>
+                                    </div>
                                 </div>
+                                <button type="button" onclick="addProductRow('produtos_caixa2')" class="bg-white hover:bg-slate-100 text-brand-600 border border-slate-200 p-2 rounded-lg transition-all shadow-sm active:scale-95 flex items-center justify-center gap-2 text-xs font-bold w-full">
+                                    <i data-lucide="plus" class="w-4 h-4"></i> Adicionar Produto
+                                </button>
                             </div>
                             <div id="content_caixa2" class="transition-all">
-                                <textarea id="reposicaoCaixa2" rows="4" oninput="updateReposicaoPreview()" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none transition-all font-medium text-slate-700 shadow-sm resize-none"></textarea>
+                                <div id="produtos_caixa2" class="space-y-2 min-h-[40px]"></div>
                             </div>
                         </div>
 
                         <!-- CAIXA 03 -->
                         <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 transition-all" id="card_caixa3">
-                            <div class="flex flex-col gap-3 mb-3">
-                                <label class="text-[13px] font-bold text-brand-700 uppercase tracking-widest flex items-center gap-2 cursor-pointer select-none w-max">
-                                    <input type="checkbox" id="check_caixa3" checked onchange="toggleCaixa(3); updateReposicaoPreview()" class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
-                                    <i data-lucide="package" class="w-4 h-4"></i> Caixa 03
-                                </label>
-                                <div class="flex flex-wrap gap-2 items-center bg-slate-200/50 p-2 rounded-xl border border-slate-200/60">
-                                    <select id="produtoSelect_caixa3" class="flex-1 min-w-[130px] text-[11px] py-2 px-2 bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 rounded-lg outline-none cursor-pointer font-bold transition-colors shadow-sm">
-                                        <option value="">Produto...</option>
-                                    </select>
-                                    <input type="number" step="0.01" id="qtd_caixa3" placeholder="Qtd" class="w-16 text-[11px] py-2 px-2 bg-white text-slate-700 border border-slate-200 rounded-lg outline-none font-bold transition-colors shadow-sm placeholder:text-slate-400">
-                                    <select id="unidade_caixa3" class="w-[60px] text-[11px] py-2 px-1 bg-white text-slate-700 border border-slate-200 rounded-lg outline-none cursor-pointer font-bold transition-colors shadow-sm">
-                                        <option value="kg">kg</option>
-                                        <option value="g">g</option>
-                                        <option value="L">L</option>
-                                        <option value="ml">ml</option>
-                                    </select>
-                                    <button type="button" onclick="addProdutoDetalhado(3)" class="bg-brand-600 hover:bg-brand-700 text-white p-2 rounded-lg transition-all shadow-sm active:scale-95">
-                                        <i data-lucide="plus" class="w-4 h-4"></i>
-                                    </button>
+                            <div class="flex flex-col gap-3 mb-3 border-b border-slate-200/60 pb-3">
+                                <div class="flex justify-between items-center w-full">
+                                    <label class="text-[13px] font-bold text-brand-700 uppercase tracking-widest flex items-center gap-2 cursor-pointer select-none">
+                                        <input type="checkbox" id="check_caixa3" checked onchange="toggleCaixa(3); updateReposicaoPreview()" class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
+                                        <i data-lucide="package" class="w-4 h-4"></i> Caixa 03
+                                    </label>
+                                    <div class="flex items-center gap-2">
+                                        <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Volume:</label>
+                                        <div class="relative">
+                                            <input type="number" id="volume_caixa3" value="100" required oninput="updateReposicaoPreview()" class="w-20 p-2 pl-3 pr-6 border border-slate-200 rounded-lg text-xs bg-white focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none font-bold text-slate-700 transition-all shadow-sm text-right">
+                                            <span class="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 pointer-events-none">L</span>
+                                        </div>
+                                    </div>
                                 </div>
+                                <button type="button" onclick="addProductRow('produtos_caixa3')" class="bg-white hover:bg-slate-100 text-brand-600 border border-slate-200 p-2 rounded-lg transition-all shadow-sm active:scale-95 flex items-center justify-center gap-2 text-xs font-bold w-full">
+                                    <i data-lucide="plus" class="w-4 h-4"></i> Adicionar Produto
+                                </button>
                             </div>
                             <div id="content_caixa3" class="transition-all">
-                                <textarea id="reposicaoCaixa3" rows="5" oninput="updateReposicaoPreview()" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none transition-all font-medium text-slate-700 shadow-sm resize-none"></textarea>
+                                <div id="produtos_caixa3" class="space-y-2 min-h-[40px]"></div>
                             </div>
                         </div>
 
                         <!-- CAIXA 04 -->
                         <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 transition-all" id="card_caixa4">
-                            <div class="flex flex-col gap-3 mb-3">
-                                <label class="text-[13px] font-bold text-brand-700 uppercase tracking-widest flex items-center gap-2 cursor-pointer select-none w-max">
-                                    <input type="checkbox" id="check_caixa4" checked onchange="toggleCaixa(4); updateReposicaoPreview()" class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
-                                    <i data-lucide="package" class="w-4 h-4"></i> Caixa 04
-                                </label>
-                                <div class="flex flex-wrap gap-2 items-center bg-slate-200/50 p-2 rounded-xl border border-slate-200/60">
-                                    <select id="produtoSelect_caixa4" class="flex-1 min-w-[130px] text-[11px] py-2 px-2 bg-white text-slate-600 hover:bg-slate-50 border border-slate-200 rounded-lg outline-none cursor-pointer font-bold transition-colors shadow-sm">
-                                        <option value="">Produto...</option>
-                                    </select>
-                                    <input type="number" step="0.01" id="qtd_caixa4" placeholder="Qtd" class="w-16 text-[11px] py-2 px-2 bg-white text-slate-700 border border-slate-200 rounded-lg outline-none font-bold transition-colors shadow-sm placeholder:text-slate-400">
-                                    <select id="unidade_caixa4" class="w-[60px] text-[11px] py-2 px-1 bg-white text-slate-700 border border-slate-200 rounded-lg outline-none cursor-pointer font-bold transition-colors shadow-sm">
-                                        <option value="kg">kg</option>
-                                        <option value="g">g</option>
-                                        <option value="L">L</option>
-                                        <option value="ml">ml</option>
-                                    </select>
-                                    <button type="button" onclick="addProdutoDetalhado(4)" class="bg-brand-600 hover:bg-brand-700 text-white p-2 rounded-lg transition-all shadow-sm active:scale-95">
-                                        <i data-lucide="plus" class="w-4 h-4"></i>
-                                    </button>
+                            <div class="flex flex-col gap-3 mb-3 border-b border-slate-200/60 pb-3">
+                                <div class="flex justify-between items-center w-full">
+                                    <label class="text-[13px] font-bold text-brand-700 uppercase tracking-widest flex items-center gap-2 cursor-pointer select-none">
+                                        <input type="checkbox" id="check_caixa4" checked onchange="toggleCaixa(4); updateReposicaoPreview()" class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
+                                        <i data-lucide="package" class="w-4 h-4"></i> Caixa 04
+                                    </label>
+                                    <div class="flex items-center gap-2">
+                                        <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Volume:</label>
+                                        <div class="relative">
+                                            <input type="number" id="volume_caixa4" value="100" required oninput="updateReposicaoPreview()" class="w-20 p-2 pl-3 pr-6 border border-slate-200 rounded-lg text-xs bg-white focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none font-bold text-slate-700 transition-all shadow-sm text-right">
+                                            <span class="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 pointer-events-none">L</span>
+                                        </div>
+                                    </div>
                                 </div>
+                                <button type="button" onclick="addProductRow('produtos_caixa4')" class="bg-white hover:bg-slate-100 text-brand-600 border border-slate-200 p-2 rounded-lg transition-all shadow-sm active:scale-95 flex items-center justify-center gap-2 text-xs font-bold w-full">
+                                    <i data-lucide="plus" class="w-4 h-4"></i> Adicionar Produto
+                                </button>
                             </div>
                             <div id="content_caixa4" class="transition-all">
-                                <textarea id="reposicaoCaixa4" rows="3" oninput="updateReposicaoPreview()" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none transition-all font-medium text-slate-700 shadow-sm resize-none"></textarea>
+                                <div id="produtos_caixa4" class="space-y-2 min-h-[40px]"></div>
                             </div>
                         </div>
                     </div>
@@ -392,27 +376,27 @@
 
                     <!-- CORPO DO PREVIEW -->
                     <div class="px-8 py-8 flex flex-col h-auto min-h-[200px] bg-white">
-                        <h3 id="previewRepLitrosTitle" class="text-[16px] font-black text-slate-800 mb-5 border-b border-slate-100 pb-3">Adubação para caixa de 100L.</h3>
+                        <h3 class="text-[16px] font-black text-slate-800 mb-5 border-b border-slate-100 pb-3">Detalhes da Adubação</h3>
                         
                         <div class="space-y-4">
                             <div id="container_previewRepCaixa1" class="bg-slate-50/80 rounded-xl p-5 border border-slate-200">
-                                <h4 class="text-[14px] font-bold text-brand-700 mb-2">Caixa 01.</h4>
-                                <div id="previewRepCaixa1" class="whitespace-pre-line text-[15px] font-medium text-slate-700 leading-relaxed"></div>
+                                <h4 id="previewRepCaixa1Title" class="text-[14px] font-bold text-brand-700 mb-2">Caixa 01 (100L)</h4>
+                                <div id="previewRepCaixa1" class="whitespace-pre-line text-[14px] font-medium text-slate-700 leading-relaxed"></div>
                             </div>
                             
                             <div id="container_previewRepCaixa2" class="bg-slate-50/80 rounded-xl p-5 border border-slate-200">
-                                <h4 class="text-[14px] font-bold text-brand-700 mb-2">Caixa 02</h4>
-                                <div id="previewRepCaixa2" class="whitespace-pre-line text-[15px] font-medium text-slate-700 leading-relaxed"></div>
+                                <h4 id="previewRepCaixa2Title" class="text-[14px] font-bold text-brand-700 mb-2">Caixa 02 (100L)</h4>
+                                <div id="previewRepCaixa2" class="whitespace-pre-line text-[14px] font-medium text-slate-700 leading-relaxed"></div>
                             </div>
                             
                             <div id="container_previewRepCaixa3" class="bg-slate-50/80 rounded-xl p-5 border border-slate-200">
-                                <h4 class="text-[14px] font-bold text-brand-700 mb-2">Caixa 03.</h4>
-                                <div id="previewRepCaixa3" class="whitespace-pre-line text-[15px] font-medium text-slate-700 leading-relaxed"></div>
+                                <h4 id="previewRepCaixa3Title" class="text-[14px] font-bold text-brand-700 mb-2">Caixa 03 (100L)</h4>
+                                <div id="previewRepCaixa3" class="whitespace-pre-line text-[14px] font-medium text-slate-700 leading-relaxed"></div>
                             </div>
                             
                             <div id="container_previewRepCaixa4" class="bg-slate-50/80 rounded-xl p-5 border border-slate-200">
-                                <h4 class="text-[14px] font-bold text-brand-700 mb-2">Caixa 04.</h4>
-                                <div id="previewRepCaixa4" class="whitespace-pre-line text-[15px] font-medium text-slate-700 leading-relaxed"></div>
+                                <h4 id="previewRepCaixa4Title" class="text-[14px] font-bold text-brand-700 mb-2">Caixa 04 (100L)</h4>
+                                <div id="previewRepCaixa4" class="whitespace-pre-line text-[14px] font-medium text-slate-700 leading-relaxed"></div>
                             </div>
                         </div>
                     </div>
@@ -519,25 +503,15 @@
         let currentTab = 'programacao';
 
         document.addEventListener("DOMContentLoaded", () => {
-            lucide.createIcons();
             const today = new Date();
             currentWeekNumber = getISOWeekNumber(today);
             
             document.getElementById('weekNumber').value = currentWeekNumber;
-            // Define data de hoje na reposição por padrão
             document.getElementById('reposicaoData').value = today.toISOString().split('T')[0];
             
             renderDaysForm();
             updateAlvosOptions();
             
-            // Popula os selects das caixas de reposição
-            const prodOptions = generateProductOptions();
-            ['caixa1', 'caixa2', 'caixa3', 'caixa4'].forEach(caixa => {
-                const sel = document.getElementById(`produtoSelect_${caixa}`);
-                if(sel) sel.innerHTML = prodOptions;
-            });
-            
-            // Carregar dados salvos do localStorage
             loadFromLocalStorage();
             
             updateDayLabels();
@@ -545,9 +519,6 @@
             updateReposicaoPreview();
         });
 
-        // ==========================================
-        // SISTEMA DE ABAS
-        // ==========================================
         function switchTab(tab) {
             currentTab = tab;
             const btnProg = document.getElementById('btn-tab-programacao');
@@ -560,9 +531,7 @@
             const prevRep = document.getElementById('preview-container-reposicao');
 
             if (tab === 'programacao') {
-                // Ativar Botão Programação
                 btnProg.className = "flex-1 py-2.5 px-4 rounded-xl font-bold text-sm bg-white text-brand-600 shadow-sm transition-all flex items-center justify-center gap-2";
-                // Desativar Botão Reposição
                 btnRep.className = "flex-1 py-2.5 px-4 rounded-xl font-bold text-sm text-slate-500 hover:text-slate-800 transition-all flex items-center justify-center gap-2";
                 
                 contProg.classList.remove('hidden');
@@ -571,9 +540,7 @@
                 prevProg.classList.remove('hidden');
                 prevRep.classList.add('hidden');
             } else {
-                // Ativar Botão Reposição
                 btnRep.className = "flex-1 py-2.5 px-4 rounded-xl font-bold text-sm bg-white text-brand-600 shadow-sm transition-all flex items-center justify-center gap-2";
-                // Desativar Botão Programação
                 btnProg.className = "flex-1 py-2.5 px-4 rounded-xl font-bold text-sm text-slate-500 hover:text-slate-800 transition-all flex items-center justify-center gap-2";
                 
                 contProg.classList.add('hidden');
@@ -585,12 +552,189 @@
         }
 
         // ==========================================
+        // PRODUTOS (LINHAS DINÂMICAS)
+        // ==========================================
+        function addProductRow(containerId, name = '', type = '', dose = '', unit = '') {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            
+            const rowId = 'prod-row-' + Date.now() + Math.random().toString(36).substr(2, 5);
+            const isReposicao = containerId.includes('caixa');
+            
+            if (!unit) unit = isReposicao ? 'kg' : 'ml';
+
+            const units = ['ml', 'L', 'g', 'kg'];
+            const optionsHtml = units.map(u => `<option value="${u}" ${u === unit ? 'selected' : ''}>${u}</option>`).join('');
+
+            let standardTypes = [];
+            if (isReposicao) {
+                standardTypes = ['Orgânico', 'Mineral', 'Foliar', 'Organomineral', 'Micro', 'Macro'].sort();
+            } else {
+                standardTypes = [
+                    'Acaricidas', 'Adjuvantes', 'Bactericidas', 'Biológico', 'Defensivo', 'Desfolhantes',
+                    'Espalhante', 'Estabilizador de PH', 'Estruturador', 'Extrato', 'Fertilizante', 'Foliar', 'Fungicidas', 'Herbicidas', 'Inseticidas',
+                    'Manipulado', 'Natural', 'Nematicidas', 'Nutricional', 'Repelente', 'Rodenticidas'
+                ].sort();
+            }
+
+            let allProducts = [];
+            for (const cat in dbProducts) { allProducts.push(...dbProducts[cat]); }
+            
+            let isCustomName = name && !allProducts.includes(name);
+            let isCustomType = type && !standardTypes.includes(type);
+
+            const typesOptionsHtml = standardTypes.map(t => 
+                `<option value="${t}" ${t === type && !isCustomType ? 'selected' : ''}>${t}</option>`
+            ).join('');
+            
+            let productsOptionsHtml = '';
+            for (const [category, products] of Object.entries(dbProducts)) {
+                productsOptionsHtml += `<optgroup label="-- ${category} --">`;
+                products.forEach(p => {
+                    productsOptionsHtml += `<option value="${p}" ${p === name && !isCustomName ? 'selected' : ''}>${p}</option>`;
+                });
+                productsOptionsHtml += `</optgroup>`;
+            }
+
+            const div = document.createElement('div');
+            div.className = "flex gap-2 items-center product-row animate-fade-in-down flex-wrap sm:flex-nowrap bg-white p-2 rounded-lg border border-slate-200 shadow-sm relative";
+            div.id = rowId;
+            
+            const updateCall = isReposicao ? 'updateReposicaoPreview()' : 'updatePreview()';
+
+            div.innerHTML = `
+                <div class="w-full sm:w-auto sm:flex-grow relative">
+                    <select class="prod-name-select w-full p-2 border border-slate-200 rounded-lg text-xs font-bold text-slate-700 focus:ring-2 focus:ring-brand-500 outline-none bg-slate-50 ${isCustomName ? 'hidden' : ''}" onchange="toggleRowCustomProduct(this, '${updateCall}')">
+                        <option value="" disabled ${!name ? 'selected' : ''}>Produto...</option>
+                        ${productsOptionsHtml}
+                        <option value="Outro" ${isCustomName ? 'selected' : ''}>Outro</option>
+                    </select>
+                    <div class="prod-name-custom-div w-full relative ${isCustomName ? '' : 'hidden'}">
+                        <input type="text" placeholder="Qual produto?" class="prod-name-custom-input w-full p-2 pr-6 border border-slate-200 rounded-lg text-xs font-bold text-slate-700 focus:ring-2 focus:ring-brand-500 outline-none bg-slate-50" value="${isCustomName ? name : ''}" oninput="${updateCall}">
+                        <button type="button" onclick="resetRowProduct(this, '${updateCall}')" class="absolute right-1 top-1/2 -translate-y-1/2 text-slate-400 hover:text-red-500 p-1">
+                            <i data-lucide="x-circle" class="w-3 h-3"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="w-1/2 sm:w-28 relative">
+                     <select class="prod-type-select w-full p-2 border border-slate-200 rounded-lg text-xs font-bold text-slate-700 focus:ring-2 focus:ring-brand-500 outline-none bg-slate-50 ${isCustomType ? 'hidden' : ''}" onchange="toggleRowCustomType(this, '${updateCall}')">
+                        <option value="" disabled ${!type ? 'selected' : ''}>Tipo...</option>
+                        ${typesOptionsHtml}
+                        <option value="Outro" ${isCustomType ? 'selected' : ''}>Outro</option>
+                    </select>
+                    <div class="prod-type-custom-div w-full relative ${isCustomType ? '' : 'hidden'}">
+                        <input type="text" placeholder="Qual?" class="prod-type-custom-input w-full p-2 pr-6 border border-slate-200 rounded-lg text-xs font-bold text-slate-700 focus:ring-2 focus:ring-brand-500 outline-none bg-slate-50" value="${isCustomType ? type : ''}" oninput="${updateCall}">
+                        <button type="button" onclick="resetRowType(this, '${updateCall}')" class="absolute right-1 top-1/2 -translate-y-1/2 text-slate-400 hover:text-red-500 p-1">
+                            <i data-lucide="x-circle" class="w-3 h-3"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="w-1/4 sm:w-20">
+                    <input type="number" step="0.01" class="prod-dose-input w-full p-2 border border-slate-200 rounded-lg text-xs font-bold text-slate-700 focus:ring-2 focus:ring-brand-500 outline-none bg-slate-50" placeholder="Dose" value="${dose}" oninput="${updateCall}">
+                </div>
+                <div class="w-1/4 sm:w-16">
+                    <select class="prod-unit-input w-full p-2 border border-slate-200 rounded-lg text-xs font-bold text-slate-700 focus:ring-2 focus:ring-brand-500 outline-none bg-slate-50" onchange="${updateCall}">
+                        ${optionsHtml}
+                    </select>
+                </div>
+                <button type="button" onclick="removeProductRow('${rowId}', '${updateCall}')" class="text-red-400 hover:text-red-600 hover:bg-red-50 p-2 rounded-lg transition-colors flex items-center justify-center">
+                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                </button>
+            `;
+            container.appendChild(div);
+            lucide.createIcons();
+        }
+
+        function toggleRowCustomProduct(selectElement, updateCallStr) {
+            if(selectElement.value === 'Outro') {
+                const parent = selectElement.parentElement;
+                const customDiv = parent.querySelector('.prod-name-custom-div');
+                const customInput = customDiv.querySelector('input');
+                selectElement.classList.add('hidden');
+                customDiv.classList.remove('hidden');
+                customInput.focus();
+            } else {
+                eval(updateCallStr);
+            }
+        }
+
+        function resetRowProduct(btnElement, updateCallStr) {
+            const customDiv = btnElement.parentElement;
+            const parent = customDiv.parentElement;
+            const select = parent.querySelector('.prod-name-select');
+            const input = customDiv.querySelector('input');
+            input.value = ''; 
+            select.selectedIndex = 0; 
+            select.classList.remove('hidden');
+            customDiv.classList.add('hidden');
+            eval(updateCallStr);
+        }
+
+        function toggleRowCustomType(selectElement, updateCallStr) {
+            if(selectElement.value === 'Outro') {
+                const parent = selectElement.parentElement;
+                const customDiv = parent.querySelector('.prod-type-custom-div');
+                const customInput = customDiv.querySelector('input');
+                selectElement.classList.add('hidden');
+                customDiv.classList.remove('hidden');
+                customInput.focus();
+            } else {
+                eval(updateCallStr);
+            }
+        }
+
+        function resetRowType(btnElement, updateCallStr) {
+            const customDiv = btnElement.parentElement;
+            const parent = customDiv.parentElement;
+            const select = parent.querySelector('.prod-type-select');
+            const input = customDiv.querySelector('input');
+            input.value = ''; 
+            select.selectedIndex = 0; 
+            select.classList.remove('hidden');
+            customDiv.classList.add('hidden');
+            eval(updateCallStr);
+        }
+
+        function removeProductRow(rowId, updateCallStr) {
+            const row = document.getElementById(rowId);
+            if(row) row.remove();
+            eval(updateCallStr);
+        }
+
+        function getProductsData(containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return [];
+            const rows = container.querySelectorAll('.product-row');
+            const products = [];
+            rows.forEach(row => {
+                const prodSelect = row.querySelector('.prod-name-select');
+                const typeSelect = row.querySelector('.prod-type-select');
+                
+                let name = prodSelect.value;
+                if (prodSelect.classList.contains('hidden')) {
+                    name = row.querySelector('.prod-name-custom-input').value.trim();
+                }
+
+                let type = typeSelect.value;
+                if (typeSelect.classList.contains('hidden')) {
+                    type = row.querySelector('.prod-type-custom-input').value.trim();
+                }
+
+                const dose = row.querySelector('.prod-dose-input').value;
+                const unit = row.querySelector('.prod-unit-input').value;
+                
+                if (name && dose) {
+                    products.push({ name, type, dose, unit });
+                }
+            });
+            return products;
+        }
+
+        // ==========================================
         // FUNÇÕES DE LOCALSTORAGE E LIMPEZA
         // ==========================================
-        
         function saveToLocalStorage() {
             const data = {
-                // Dados Programação
                 weekNumber: document.getElementById('weekNumber').value,
                 local: document.getElementById('localSelect').value,
                 localCustom: document.getElementById('localCustom').value,
@@ -600,32 +744,34 @@
                 aplicador: document.getElementById('aplicadorSelect').value,
                 aplicadorCustom: document.getElementById('aplicadorCustom').value,
                 days: {},
-                // Dados Reposição
+                
                 reposicaoData: document.getElementById('reposicaoData').value,
-                reposicaoLitros: document.getElementById('reposicaoLitros').value,
+                volumeCaixa1: document.getElementById('volume_caixa1').value,
+                volumeCaixa2: document.getElementById('volume_caixa2').value,
+                volumeCaixa3: document.getElementById('volume_caixa3').value,
+                volumeCaixa4: document.getElementById('volume_caixa4').value,
                 checkCaixa1: document.getElementById('check_caixa1').checked,
                 checkCaixa2: document.getElementById('check_caixa2').checked,
                 checkCaixa3: document.getElementById('check_caixa3').checked,
                 checkCaixa4: document.getElementById('check_caixa4').checked,
-                reposicaoCaixa1: document.getElementById('reposicaoCaixa1').value,
-                reposicaoCaixa2: document.getElementById('reposicaoCaixa2').value,
-                reposicaoCaixa3: document.getElementById('reposicaoCaixa3').value,
-                reposicaoCaixa4: document.getElementById('reposicaoCaixa4').value
+                reposicaoCaixa1: getProductsData('produtos_caixa1'),
+                reposicaoCaixa2: getProductsData('produtos_caixa2'),
+                reposicaoCaixa3: getProductsData('produtos_caixa3'),
+                reposicaoCaixa4: getProductsData('produtos_caixa4')
             };
 
             daysOfWeek.forEach(day => {
                 const dayId = day.toLowerCase().split('-')[0];
                 const checkbox = document.getElementById(`check_${dayId}`);
-                if (checkbox && checkbox.checked) {
-                    data.days[dayId] = {
-                        setores: document.getElementById(`setores_${dayId}`).value,
-                        estufa: document.getElementById(`estufa_${dayId}`).value,
-                        horario_inicio: document.getElementById(`horario_inicio_${dayId}`).value,
-                        horario_fim: document.getElementById(`horario_fim_${dayId}`).value,
-                        produtos: document.getElementById(`produtos_${dayId}`).value,
-                        alvo: document.getElementById(`alvo_${dayId}`).value,
-                    };
-                }
+                data.days[dayId] = {
+                    checked: checkbox ? checkbox.checked : false,
+                    setores: document.getElementById(`setores_${dayId}`).value,
+                    estufa: document.getElementById(`estufa_${dayId}`).value,
+                    horario_inicio: document.getElementById(`horario_inicio_${dayId}`).value,
+                    horario_fim: document.getElementById(`horario_fim_${dayId}`).value,
+                    produtos: getProductsData(`produtos_${dayId}`),
+                    alvo: document.getElementById(`alvo_${dayId}`).value,
+                };
             });
 
             localStorage.setItem('planejamentoSPG_data', JSON.stringify(data));
@@ -637,7 +783,6 @@
                 try {
                     const data = JSON.parse(savedData);
                     
-                    // Restaurar Programação
                     if(data.weekNumber) document.getElementById('weekNumber').value = data.weekNumber;
                     if(data.local) {
                         document.getElementById('localSelect').value = data.local;
@@ -662,40 +807,63 @@
                     }
                     if(data.aplicadorCustom) document.getElementById('aplicadorCustom').value = data.aplicadorCustom;
 
-                    // Restaurar Reposição
                     if(data.reposicaoData) document.getElementById('reposicaoData').value = data.reposicaoData;
-                    if(data.reposicaoLitros) document.getElementById('reposicaoLitros').value = data.reposicaoLitros;
+                    if(data.volumeCaixa1) document.getElementById('volume_caixa1').value = data.volumeCaixa1;
+                    if(data.volumeCaixa2) document.getElementById('volume_caixa2').value = data.volumeCaixa2;
+                    if(data.volumeCaixa3) document.getElementById('volume_caixa3').value = data.volumeCaixa3;
+                    if(data.volumeCaixa4) document.getElementById('volume_caixa4').value = data.volumeCaixa4;
                     
                     if(data.checkCaixa1 !== undefined) { document.getElementById('check_caixa1').checked = data.checkCaixa1; toggleCaixa(1); }
                     if(data.checkCaixa2 !== undefined) { document.getElementById('check_caixa2').checked = data.checkCaixa2; toggleCaixa(2); }
                     if(data.checkCaixa3 !== undefined) { document.getElementById('check_caixa3').checked = data.checkCaixa3; toggleCaixa(3); }
                     if(data.checkCaixa4 !== undefined) { document.getElementById('check_caixa4').checked = data.checkCaixa4; toggleCaixa(4); }
 
-                    if(data.reposicaoCaixa1) document.getElementById('reposicaoCaixa1').value = data.reposicaoCaixa1;
-                    if(data.reposicaoCaixa2) document.getElementById('reposicaoCaixa2').value = data.reposicaoCaixa2;
-                    if(data.reposicaoCaixa3) document.getElementById('reposicaoCaixa3').value = data.reposicaoCaixa3;
-                    if(data.reposicaoCaixa4) document.getElementById('reposicaoCaixa4').value = data.reposicaoCaixa4;
+                    [1, 2, 3, 4].forEach(i => {
+                        const container = document.getElementById(`produtos_caixa${i}`);
+                        container.innerHTML = '';
+                        if (Array.isArray(data[`reposicaoCaixa${i}`]) && data[`reposicaoCaixa${i}`].length > 0) {
+                            data[`reposicaoCaixa${i}`].forEach(p => addProductRow(`produtos_caixa${i}`, p.name, p.type, p.dose, p.unit));
+                        } else {
+                            addProductRow(`produtos_caixa${i}`);
+                        }
+                    });
 
                     if (data.days) {
                         Object.keys(data.days).forEach(dayId => {
                             const dayData = data.days[dayId];
                             const checkbox = document.getElementById(`check_${dayId}`);
                             if (checkbox) {
-                                checkbox.checked = true;
-                                toggleDayFields(dayId); // Força a exibição dos campos
+                                checkbox.checked = dayData.checked || false;
+                                if(checkbox.checked) toggleDayFields(dayId);
                                 
                                 document.getElementById(`setores_${dayId}`).value = dayData.setores || '';
                                 document.getElementById(`estufa_${dayId}`).value = dayData.estufa || '';
                                 document.getElementById(`horario_inicio_${dayId}`).value = dayData.horario_inicio || '';
                                 document.getElementById(`horario_fim_${dayId}`).value = dayData.horario_fim || '';
-                                document.getElementById(`produtos_${dayId}`).value = dayData.produtos || '';
                                 document.getElementById(`alvo_${dayId}`).value = dayData.alvo || '';
+                                
+                                const container = document.getElementById(`produtos_${dayId}`);
+                                container.innerHTML = '';
+                                if (Array.isArray(dayData.produtos) && dayData.produtos.length > 0) {
+                                    dayData.produtos.forEach(p => addProductRow(`produtos_${dayId}`, p.name, p.type, p.dose, p.unit));
+                                } else {
+                                    addProductRow(`produtos_${dayId}`);
+                                }
                             }
                         });
                     }
+
                 } catch (e) {
                     console.error("Erro ao carregar dados salvos:", e);
                 }
+            } else {
+                daysOfWeek.forEach(day => {
+                    const dayId = day.toLowerCase().split('-')[0];
+                    addProductRow(`produtos_${dayId}`);
+                });
+                [1, 2, 3, 4].forEach(i => {
+                    addProductRow(`produtos_caixa${i}`);
+                });
             }
         }
 
@@ -709,14 +877,10 @@
         }
 
         function executeClearData() {
-            // Remove o localstorage
             localStorage.removeItem('planejamentoSPG_data');
-            
-            // Limpa os forms nativos
             document.getElementById('planningForm').reset();
             document.getElementById('reposicaoForm').reset();
             
-            // Desmarca todos os checkboxes de dias e oculta os containers
             daysOfWeek.forEach(day => {
                 const dayId = day.toLowerCase().split('-')[0];
                 const checkbox = document.getElementById(`check_${dayId}`);
@@ -724,33 +888,31 @@
                     checkbox.checked = false;
                     toggleDayFields(dayId);
                 }
+                document.getElementById(`produtos_${dayId}`).innerHTML = '';
+                addProductRow(`produtos_${dayId}`);
             });
 
-            // Reseta a semana e data pra atuais
             const today = new Date();
             currentWeekNumber = getISOWeekNumber(today);
             document.getElementById('weekNumber').value = currentWeekNumber;
             document.getElementById('reposicaoData').value = today.toISOString().split('T')[0];
-            document.getElementById('reposicaoLitros').value = "100";
+            
+            document.getElementById('volume_caixa1').value = "100";
+            document.getElementById('volume_caixa2').value = "100";
+            document.getElementById('volume_caixa3').value = "100";
+            document.getElementById('volume_caixa4').value = "100";
 
-            // Restaura caixas de reposição para padrão (todas ativas)
             [1, 2, 3, 4].forEach(i => {
                 document.getElementById(`check_caixa${i}`).checked = true;
                 toggleCaixa(i);
+                document.getElementById(`produtos_caixa${i}`).innerHTML = '';
+                addProductRow(`produtos_caixa${i}`);
             });
-
-            // Limpa os textos das caixas
-            document.getElementById('reposicaoCaixa1').value = "";
-            document.getElementById('reposicaoCaixa2').value = "";
-            document.getElementById('reposicaoCaixa3').value = "";
-            document.getElementById('reposicaoCaixa4').value = "";
             
-            // Esconde os campos de digitação customizados se estiverem abertos
             handlePersonChange('localSelect', 'localCustomContainer');
             handlePersonChange('programadorSelect', 'programadorCustomContainer');
             handlePersonChange('aplicadorSelect', 'aplicadorCustomContainer');
 
-            // Atualiza tudo
             updateDayLabels();
             updatePreview();
             updateReposicaoPreview();
@@ -759,8 +921,6 @@
             showMessageModal("Sucesso", "O formulário foi limpo com sucesso.", "success");
         }
         
-        // ==========================================
-
         function getISOWeekNumber(d) {
             const date = new Date(d.getTime());
             date.setHours(0, 0, 0, 0);
@@ -801,21 +961,8 @@
             });
         }
 
-        function generateProductOptions() {
-            let optionsHtml = '<option value="">+ Selecionar da lista...</option>';
-            for (const [category, products] of Object.entries(dbProducts)) {
-                optionsHtml += `<optgroup label="-- ${category} --">`;
-                products.forEach(p => {
-                    optionsHtml += `<option value="${p}">${p}</option>`;
-                });
-                optionsHtml += `</optgroup>`;
-            }
-            return optionsHtml;
-        }
-
         function renderDaysForm() {
             const container = document.getElementById('daysContainer');
-            const options = generateProductOptions();
             let html = '';
             daysOfWeek.forEach((day, index) => {
                 const dayId = day.toLowerCase().split('-')[0];
@@ -870,14 +1017,16 @@
                                     <input type="time" id="horario_fim_${dayId}" oninput="updatePreview()" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none transition-all font-bold text-slate-700 shadow-sm">
                                 </div>
                             </div>
-                            <div class="mt-4">
-                                <div class="flex justify-between items-end mb-1.5">
-                                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Produtos</label>
-                                    <select onchange="addSelectedProduct(this, 'produtos_${dayId}')" class="text-[10px] py-1 px-2 bg-slate-200/60 text-slate-600 hover:bg-slate-300/60 border border-slate-200 rounded outline-none cursor-pointer font-bold max-w-[140px] truncate transition-colors">
-                                        ${options}
-                                    </select>
+                            <div class="mt-4 border-t border-slate-200/60 pt-4">
+                                <div class="flex justify-between items-center mb-3">
+                                    <label class="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">Produtos & Dosagens</label>
+                                    <button type="button" onclick="addProductRow('produtos_${dayId}')" class="bg-white hover:bg-slate-100 text-brand-600 border border-slate-200 px-3 py-1.5 rounded-lg transition-all shadow-sm active:scale-95 flex items-center gap-1 text-[10px] font-bold">
+                                        <i data-lucide="plus" class="w-3 h-3"></i> Add Produto
+                                    </button>
                                 </div>
-                                <textarea id="produtos_${dayId}" rows="2" placeholder="Digite os produtos ou selecione na lista..." oninput="updatePreview()" class="w-full p-3 border border-slate-200 rounded-xl text-sm bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none transition-all font-medium text-slate-700 shadow-sm resize-none"></textarea>
+                                <div id="produtos_${dayId}" class="space-y-2 min-h-[40px]">
+                                    <!-- Dynamic rows go here -->
+                                </div>
                             </div>
                             <div class="mt-4">
                                 <div class="flex justify-between items-end mb-1.5">
@@ -894,14 +1043,6 @@
             });
             container.innerHTML = html;
             lucide.createIcons();
-        }
-
-        function toggleCheckbox(checkboxId) {
-            const cb = document.getElementById(checkboxId);
-            cb.checked = !cb.checked;
-            cb.dispatchEvent(new Event('change'));
-            toggleDayFields(checkboxId.replace('check_', ''));
-            updatePreview();
         }
 
         function toggleDayFields(dayId) {
@@ -926,65 +1067,6 @@
                     dot.classList.add('bg-slate-200');
                     dot.classList.remove('bg-brand-500', 'shadow-[0_0_8px_rgba(34,197,94,0.6)]');
                 }
-            }
-        }
-
-        function addProdutoDetalhado(caixaId) {
-            const prodSelect = document.getElementById(`produtoSelect_caixa${caixaId}`);
-            const qtdInput = document.getElementById(`qtd_caixa${caixaId}`);
-            const undSelect = document.getElementById(`unidade_caixa${caixaId}`);
-            const textarea = document.getElementById(`reposicaoCaixa${caixaId}`);
-
-            const prod = prodSelect.value;
-            const qtd = qtdInput.value;
-            const und = undSelect.value;
-
-            if (!prod) return;
-
-            let textToAdd = prod;
-            if (qtd) {
-                textToAdd += ` ${qtd}${und}`;
-            }
-
-            let currentText = textarea.value.trim();
-            if (currentText.length > 0) {
-                textarea.value = currentText + "\n" + textToAdd;
-            } else {
-                textarea.value = textToAdd;
-            }
-
-            // reseta os campos após adicionar
-            prodSelect.value = '';
-            qtdInput.value = '';
-            undSelect.value = 'kg';
-
-            updateReposicaoPreview();
-        }
-
-        function addSelectedProduct(selectElement, textareaId, isReposicao = false) {
-            const val = selectElement.value;
-            if (!val) return;
-            const textarea = document.getElementById(textareaId);
-            let currentText = textarea.value.trim();
-            if (currentText.length > 0) {
-                if (isReposicao) {
-                    textarea.value = currentText + "\n" + val;
-                } else {
-                    if (currentText.endsWith(' e') || currentText.endsWith(',')) {
-                         textarea.value = currentText + " " + val;
-                    } else {
-                         textarea.value = currentText + ", " + val;
-                    }
-                }
-            } else {
-                textarea.value = val;
-            }
-            selectElement.value = '';
-            
-            if (isReposicao) {
-                updateReposicaoPreview();
-            } else {
-                updatePreview();
             }
         }
 
@@ -1059,17 +1141,21 @@
 
         function updateReposicaoPreview() {
             const dataVal = document.getElementById('reposicaoData').value;
-            const litros = document.getElementById('reposicaoLitros').value || '100';
             
             const active1 = document.getElementById('check_caixa1').checked;
             const active2 = document.getElementById('check_caixa2').checked;
             const active3 = document.getElementById('check_caixa3').checked;
             const active4 = document.getElementById('check_caixa4').checked;
 
-            const caixa1 = document.getElementById('reposicaoCaixa1').value;
-            const caixa2 = document.getElementById('reposicaoCaixa2').value;
-            const caixa3 = document.getElementById('reposicaoCaixa3').value;
-            const caixa4 = document.getElementById('reposicaoCaixa4').value;
+            const vol1 = document.getElementById('volume_caixa1').value || '100';
+            const vol2 = document.getElementById('volume_caixa2').value || '100';
+            const vol3 = document.getElementById('volume_caixa3').value || '100';
+            const vol4 = document.getElementById('volume_caixa4').value || '100';
+
+            const prods1 = getProductsData('produtos_caixa1');
+            const prods2 = getProductsData('produtos_caixa2');
+            const prods3 = getProductsData('produtos_caixa3');
+            const prods4 = getProductsData('produtos_caixa4');
             
             let dateStr = "--/--/----";
             if(dataVal) {
@@ -1078,26 +1164,29 @@
             }
 
             document.getElementById('previewRepDateText').innerText = `Data: ${dateStr}`;
-            document.getElementById('previewRepLitrosTitle').innerText = `Adubação para caixa de ${litros}L.`;
             
-            // Controle de visibilidade das caixas no preview
+            document.getElementById('previewRepCaixa1Title').innerText = `Caixa 01 (${vol1}L)`;
+            document.getElementById('previewRepCaixa2Title').innerText = `Caixa 02 (${vol2}L)`;
+            document.getElementById('previewRepCaixa3Title').innerText = `Caixa 03 (${vol3}L)`;
+            document.getElementById('previewRepCaixa4Title').innerText = `Caixa 04 (${vol4}L)`;
+
             document.getElementById('container_previewRepCaixa1').classList.toggle('hidden', !active1);
             document.getElementById('container_previewRepCaixa2').classList.toggle('hidden', !active2);
             document.getElementById('container_previewRepCaixa3').classList.toggle('hidden', !active3);
             document.getElementById('container_previewRepCaixa4').classList.toggle('hidden', !active4);
 
-            document.getElementById('previewRepCaixa1').innerText = caixa1 || '--';
-            document.getElementById('previewRepCaixa2').innerText = caixa2 || '--';
-            document.getElementById('previewRepCaixa3').innerText = caixa3 || '--';
-            document.getElementById('previewRepCaixa4').innerText = caixa4 || '--';
+            const formatCaixaHTML = (prods) => {
+                if(prods.length === 0) return '--';
+                return prods.map(p => `<span class="block">• [${p.type || '-'}] <span class="font-bold">${p.name}</span> - ${p.dose}${p.unit}</span>`).join('');
+            };
 
-            let textToShare = `*Reposição ${dateStr}*\n\nAdubação para caixa de ${litros}L.\n`;
-            if(active1) textToShare += `*Caixas 01.*\n${caixa1}\n`;
-            if(active2) textToShare += `*Caixa 02*\n${caixa2}\n`;
-            if(active3) textToShare += `*Caixa 03.*\n${caixa3}\n`;
-            if(active4) textToShare += `*Caixa 04.*\n${caixa4}`;
+            document.getElementById('previewRepCaixa1').innerHTML = formatCaixaHTML(prods1);
+            document.getElementById('previewRepCaixa2').innerHTML = formatCaixaHTML(prods2);
+            document.getElementById('previewRepCaixa3').innerHTML = formatCaixaHTML(prods3);
+            document.getElementById('previewRepCaixa4').innerHTML = formatCaixaHTML(prods4);
 
-            // Só atualiza os dados de compartilhamento se estivermos na aba de reposição
+            let textToShare = `*Reposição de Adubação ${dateStr}*`;
+
             if (currentTab === 'reposicao') {
                 preparedShareData = {
                     shareText: textToShare.trim(),
@@ -1140,26 +1229,27 @@
                     const estufaEl = document.getElementById(`estufa_${dayId}`);
                     const horarioInicioEl = document.getElementById(`horario_inicio_${dayId}`);
                     const horarioFimEl = document.getElementById(`horario_fim_${dayId}`);
-                    const produtosEl = document.getElementById(`produtos_${dayId}`);
                     const alvoEl = document.getElementById(`alvo_${dayId}`);
                     
                     let setores = setoresEl ? setoresEl.value.trim() : '';
                     let estufa = estufaEl ? estufaEl.value.trim() : '';
                     let horarioInicio = horarioInicioEl ? horarioInicioEl.value.trim() : '';
                     let horarioFim = horarioFimEl ? horarioFimEl.value.trim() : '';
-                    let produtos = produtosEl ? produtosEl.value.trim() : '';
                     let alvo = alvoEl ? alvoEl.value.trim() : '';
 
                     if(setores && !setores.endsWith('.')) setores += '.';
                     if(estufa && !estufa.endsWith('.')) estufa += '.';
-                    if(produtos && !produtos.endsWith('.')) produtos += '.';
                     
+                    const prods = getProductsData(`produtos_${dayId}`);
+                    let produtosHtml = prods.map(p => `<span class="block">• [${p.type || '-'}] <span class="font-bold">${p.name}</span> - ${p.dose}${p.unit}</span>`).join('');
+                    if(!produtosHtml) produtosHtml = '--';
+
                     let horario = '';
                     if (horarioInicio && horarioFim) {
                         let [h1, m1] = horarioInicio.split(':').map(Number);
                         let [h2, m2] = horarioFim.split(':').map(Number);
                         let diffMin = (h2 * 60 + m2) - (h1 * 60 + m1);
-                        if (diffMin < 0) diffMin += 24 * 60; // Caso passe da meia noite
+                        if (diffMin < 0) diffMin += 24 * 60; 
                         
                         let hDiff = Math.floor(diffMin / 60);
                         let mDiff = diffMin % 60;
@@ -1189,7 +1279,7 @@
                                 </div>
                                 <div class="col-span-2">
                                     <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Produtos</span>
-                                    <span class="text-[15px] font-medium text-slate-700 leading-relaxed">${produtos || '--'}</span>
+                                    <div class="text-[14px] font-medium text-slate-700 leading-relaxed">${produtosHtml}</div>
                                 </div>
                                 <div class="col-span-2">
                                     <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Alvo</span>
@@ -1198,6 +1288,15 @@
                             </div>
                         </div>
                     `;
+
+                    textToShare += `\n*${dayLabel}*\n`;
+                    if (setores || estufa) textToShare += `📍 Setor/Estufa: ${setores || '--'} / ${estufa || '--'}\n`;
+                    if (horario) textToShare += `⏰ Horário: ${horario}\n`;
+                    textToShare += `🎯 Alvo: ${alvo || '--'}\n`;
+                    prods.forEach(p => {
+                        textToShare += `🛡️ [${p.type || '-'}] ${p.name} (${p.dose}${p.unit})\n`;
+                    });
+                    textToShare += `----------------\n`;
                 }
             });
 
@@ -1208,7 +1307,6 @@
             }
             lucide.createIcons();
 
-            // Só atualiza os dados de compartilhamento se estivermos na aba de programação
             if (currentTab === 'programacao') {
                 preparedShareData = {
                     shareText: textToShare.trim(),
@@ -1251,17 +1349,20 @@
                     const dayId = dayName.toLowerCase().split('-')[0];
                     const checkbox = document.getElementById(`check_${dayId}`);
                     if (checkbox && checkbox.checked) {
-                        const dateForDay = new Date(monday);
-                        dateForDay.setDate(monday.getDate() + index);
+                    const dateForDay = new Date(monday);
+                    dateForDay.setDate(monday.getDate() + index);
 
-                        diasAtivos.push({
+                    const prods = getProductsData(`produtos_${dayId}`);
+                    const produtosStr = prods.map(p => `[${p.type}] ${p.name} (${p.dose}${p.unit})`).join('\n');
+
+                    diasAtivos.push({
                             dataAplicacao: dateForDay.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }),
                             nomeDia: dayName,
                             setor: document.getElementById(`setores_${dayId}`).value,
                             estufa: document.getElementById(`estufa_${dayId}`).value,
                             inicio: document.getElementById(`horario_inicio_${dayId}`).value,
                             fim: document.getElementById(`horario_fim_${dayId}`).value,
-                            produtos: document.getElementById(`produtos_${dayId}`).value,
+                            produtos: produtosStr,
                             alvo: document.getElementById(`alvo_${dayId}`).value
                         });
                     }
@@ -1285,39 +1386,26 @@
                 }
 
                 let itensReposicao = [];
-                [1, 2, 3, 4].forEach(i => {
-                    if(document.getElementById(`check_caixa${i}`).checked) {
-                        const texto = document.getElementById(`reposicaoCaixa${i}`).value;
-                        const linhas = texto.split('\n').filter(l => l.trim() !== '');
-                        
-                        linhas.forEach(linha => {
-                            let produto = linha.trim();
-                            let quantidade = "";
-                            let unidade = "";
-
-                            // Separa a quantidade e unidade no final da frase automaticamente
-                            const regex = /^(.*?)\s*(\d+(?:\.\d+)?)\s*(kg|g|L|ml|l)$/i;
-                            const match = produto.match(regex);
-                            if (match) {
-                                produto = match[1].trim();
-                                quantidade = match[2];
-                                unidade = match[3];
-                            }
-
-                            itensReposicao.push({
-                                caixa: `Caixa 0${i}`,
-                                produto: produto,
-                                quantidade: quantidade,
-                                unidade: unidade
-                            });
+            [1, 2, 3, 4].forEach(i => {
+                if(document.getElementById(`check_caixa${i}`).checked) {
+                    const prods = getProductsData(`produtos_caixa${i}`);
+                    const volume = document.getElementById(`volume_caixa${i}`).value || '100';
+                    
+                    prods.forEach(p => {
+                        itensReposicao.push({
+                            caixa: `Caixa 0${i}`,
+                            volume: volume,
+                            produto: p.name,
+                            quantidade: p.dose,
+                            unidade: p.unit
                         });
-                    }
-                });
+                    });
+                }
+            });
 
-                payload = {
+            payload = {
                     tipo: "reposicao",
                     dataReposicao: dateStr,
-                    volumeLitros: document.getElementById('reposicaoLitros').value,
                     itensReposicao: itensReposicao
                 };
             }
@@ -1328,7 +1416,7 @@
                     body: JSON.stringify(payload)
                 });
             } catch (error) {
-                console.error("Erro ao enviar para a planilha:", error);
+                console.error("Erro ao enviar para a folha de cálculo:", error);
             }
         }
 
@@ -1338,12 +1426,10 @@
             const originalText = btnSpan.innerText; 
             
             try {
-                btnSpan.innerText = "Salvando Planilha...";
-                // Envia os dados para a planilha usando o Apps Script
+                btnSpan.innerText = "A Guardar...";
                 await sendDataToSheets();
 
-                btnSpan.innerText = "Gerando Imagem...";
-                // Seleciona o card correto dependendo da aba ativa
+                btnSpan.innerText = "A Gerar Imagem...";
                 const elementId = currentTab === 'programacao' ? 'report-card' : 'report-card-reposicao';
                 const element = document.getElementById(elementId);
                 
@@ -1363,7 +1449,6 @@
                             el.style.boxShadow = 'none';
                         }
                         
-                        // Aumenta a fonte do cabeçalho exclusivamente na imagem gerada (Programação)
                         const mainTitle = doc.getElementById('previewMainTitle');
                         if (mainTitle) mainTitle.style.fontSize = '24px';
                         const localText = doc.getElementById('previewLocalText');
@@ -1371,7 +1456,6 @@
                         const weekText = doc.getElementById('previewWeekText');
                         if (weekText) { weekText.style.fontSize = '18px'; weekText.style.marginTop = '6px'; }
 
-                        // Aumenta a fonte do cabeçalho na imagem gerada (Reposição)
                         const repMainTitle = doc.getElementById('previewRepMainTitle');
                         if (repMainTitle) repMainTitle.style.fontSize = '24px';
                         const repTitleText = doc.getElementById('previewRepTitleText');
@@ -1400,7 +1484,7 @@
                     await navigator.share({ files: [file], title: filename, text: shareText }); 
                     hideSuccessModal();
                 } catch (shareErr) {
-                    console.log("Compartilhamento cancelado ou falhou:", shareErr);
+                    console.log("Partilha cancelada ou falhou:", shareErr);
                 }
             } else { 
                 downloadFile(dataUrl, filename); 
