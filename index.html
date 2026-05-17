@@ -192,14 +192,7 @@
                 </h2>
                 
                 <form id="reposicaoForm" class="space-y-5">
-                    <div class="grid grid-cols-1 gap-5">
-                        <div>
-                            <label class="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5 block">Data da Reposição</label>
-                            <input type="date" id="reposicaoData" required oninput="updateReposicaoPreview()" class="w-full sm:w-1/2 p-3.5 border border-slate-200 rounded-xl text-sm bg-slate-50 focus:bg-white focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500 outline-none font-bold text-slate-700 transition-all shadow-sm">
-                        </div>
-                    </div>
-
-                    <div class="pt-4 border-t border-slate-100 space-y-5">
+                    <div class="pt-2 space-y-5">
                         <h3 class="text-[13px] font-black text-slate-800 uppercase tracking-widest mb-3 flex items-center justify-between">
                             Composição das Caixas
                         </h3>
@@ -207,16 +200,22 @@
                         <!-- CAIXA 01 -->
                         <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 transition-all" id="card_caixa1">
                             <div class="flex flex-col gap-3 mb-3 border-b border-slate-200/60 pb-3">
-                                <div class="flex justify-between items-center w-full">
+                                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center w-full gap-3">
                                     <label class="text-[13px] font-bold text-brand-700 uppercase tracking-widest flex items-center gap-2 cursor-pointer select-none">
                                         <input type="checkbox" id="check_caixa1" checked onchange="toggleCaixa(1); updateReposicaoPreview()" class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
                                         <i data-lucide="package" class="w-4 h-4"></i> Caixa 01
                                     </label>
-                                    <div class="flex items-center gap-2">
-                                        <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Volume:</label>
-                                        <div class="relative">
-                                            <input type="number" id="volume_caixa1" value="100" required oninput="updateReposicaoPreview()" class="w-20 p-2 pl-3 pr-6 border border-slate-200 rounded-lg text-xs bg-white focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none font-bold text-slate-700 transition-all shadow-sm text-right">
-                                            <span class="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 pointer-events-none">L</span>
+                                    <div class="flex flex-wrap items-center gap-3">
+                                        <div class="flex items-center gap-2">
+                                            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Data:</label>
+                                            <input type="date" id="data_caixa1" required oninput="updateReposicaoPreview()" class="p-2 border border-slate-200 rounded-lg text-xs bg-white focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none font-bold text-slate-700 transition-all shadow-sm">
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Vol:</label>
+                                            <div class="relative">
+                                                <input type="number" id="volume_caixa1" value="100" required oninput="updateReposicaoPreview()" class="w-16 p-2 pl-2 pr-5 border border-slate-200 rounded-lg text-xs bg-white focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none font-bold text-slate-700 transition-all shadow-sm text-right">
+                                                <span class="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 pointer-events-none">L</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -232,16 +231,22 @@
                         <!-- CAIXA 02 -->
                         <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 transition-all" id="card_caixa2">
                             <div class="flex flex-col gap-3 mb-3 border-b border-slate-200/60 pb-3">
-                                <div class="flex justify-between items-center w-full">
+                                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center w-full gap-3">
                                     <label class="text-[13px] font-bold text-brand-700 uppercase tracking-widest flex items-center gap-2 cursor-pointer select-none">
                                         <input type="checkbox" id="check_caixa2" checked onchange="toggleCaixa(2); updateReposicaoPreview()" class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
                                         <i data-lucide="package" class="w-4 h-4"></i> Caixa 02
                                     </label>
-                                    <div class="flex items-center gap-2">
-                                        <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Volume:</label>
-                                        <div class="relative">
-                                            <input type="number" id="volume_caixa2" value="100" required oninput="updateReposicaoPreview()" class="w-20 p-2 pl-3 pr-6 border border-slate-200 rounded-lg text-xs bg-white focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none font-bold text-slate-700 transition-all shadow-sm text-right">
-                                            <span class="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 pointer-events-none">L</span>
+                                    <div class="flex flex-wrap items-center gap-3">
+                                        <div class="flex items-center gap-2">
+                                            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Data:</label>
+                                            <input type="date" id="data_caixa2" required oninput="updateReposicaoPreview()" class="p-2 border border-slate-200 rounded-lg text-xs bg-white focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none font-bold text-slate-700 transition-all shadow-sm">
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Vol:</label>
+                                            <div class="relative">
+                                                <input type="number" id="volume_caixa2" value="100" required oninput="updateReposicaoPreview()" class="w-16 p-2 pl-2 pr-5 border border-slate-200 rounded-lg text-xs bg-white focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none font-bold text-slate-700 transition-all shadow-sm text-right">
+                                                <span class="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 pointer-events-none">L</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -257,16 +262,22 @@
                         <!-- CAIXA 03 -->
                         <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 transition-all" id="card_caixa3">
                             <div class="flex flex-col gap-3 mb-3 border-b border-slate-200/60 pb-3">
-                                <div class="flex justify-between items-center w-full">
+                                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center w-full gap-3">
                                     <label class="text-[13px] font-bold text-brand-700 uppercase tracking-widest flex items-center gap-2 cursor-pointer select-none">
                                         <input type="checkbox" id="check_caixa3" checked onchange="toggleCaixa(3); updateReposicaoPreview()" class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
                                         <i data-lucide="package" class="w-4 h-4"></i> Caixa 03
                                     </label>
-                                    <div class="flex items-center gap-2">
-                                        <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Volume:</label>
-                                        <div class="relative">
-                                            <input type="number" id="volume_caixa3" value="100" required oninput="updateReposicaoPreview()" class="w-20 p-2 pl-3 pr-6 border border-slate-200 rounded-lg text-xs bg-white focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none font-bold text-slate-700 transition-all shadow-sm text-right">
-                                            <span class="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 pointer-events-none">L</span>
+                                    <div class="flex flex-wrap items-center gap-3">
+                                        <div class="flex items-center gap-2">
+                                            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Data:</label>
+                                            <input type="date" id="data_caixa3" required oninput="updateReposicaoPreview()" class="p-2 border border-slate-200 rounded-lg text-xs bg-white focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none font-bold text-slate-700 transition-all shadow-sm">
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Vol:</label>
+                                            <div class="relative">
+                                                <input type="number" id="volume_caixa3" value="100" required oninput="updateReposicaoPreview()" class="w-16 p-2 pl-2 pr-5 border border-slate-200 rounded-lg text-xs bg-white focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none font-bold text-slate-700 transition-all shadow-sm text-right">
+                                                <span class="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 pointer-events-none">L</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -282,16 +293,22 @@
                         <!-- CAIXA 04 -->
                         <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 transition-all" id="card_caixa4">
                             <div class="flex flex-col gap-3 mb-3 border-b border-slate-200/60 pb-3">
-                                <div class="flex justify-between items-center w-full">
+                                <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center w-full gap-3">
                                     <label class="text-[13px] font-bold text-brand-700 uppercase tracking-widest flex items-center gap-2 cursor-pointer select-none">
                                         <input type="checkbox" id="check_caixa4" checked onchange="toggleCaixa(4); updateReposicaoPreview()" class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
                                         <i data-lucide="package" class="w-4 h-4"></i> Caixa 04
                                     </label>
-                                    <div class="flex items-center gap-2">
-                                        <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Volume:</label>
-                                        <div class="relative">
-                                            <input type="number" id="volume_caixa4" value="100" required oninput="updateReposicaoPreview()" class="w-20 p-2 pl-3 pr-6 border border-slate-200 rounded-lg text-xs bg-white focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none font-bold text-slate-700 transition-all shadow-sm text-right">
-                                            <span class="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 pointer-events-none">L</span>
+                                    <div class="flex flex-wrap items-center gap-3">
+                                        <div class="flex items-center gap-2">
+                                            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Data:</label>
+                                            <input type="date" id="data_caixa4" required oninput="updateReposicaoPreview()" class="p-2 border border-slate-200 rounded-lg text-xs bg-white focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none font-bold text-slate-700 transition-all shadow-sm">
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Vol:</label>
+                                            <div class="relative">
+                                                <input type="number" id="volume_caixa4" value="100" required oninput="updateReposicaoPreview()" class="w-16 p-2 pl-2 pr-5 border border-slate-200 rounded-lg text-xs bg-white focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 outline-none font-bold text-slate-700 transition-all shadow-sm text-right">
+                                                <span class="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400 pointer-events-none">L</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -365,7 +382,7 @@
                         <div class="flex-1 overflow-hidden">
                             <h2 id="previewRepMainTitle" class="text-[14px] sm:text-[15px] font-bold leading-snug text-slate-100 whitespace-nowrap tracking-tight">Registro de Insumos</h2>
                             <h2 id="previewRepTitleText" class="text-[16px] sm:text-[17px] font-black leading-snug text-white mt-1">Reposição de Adubo</h2>
-                            <p id="previewRepDateText" class="text-[13px] sm:text-[14px] font-medium text-slate-300 mt-0.5">Data: --/--/----</p>
+                            <p id="previewRepDateText" class="text-[13px] sm:text-[14px] font-medium text-slate-300 mt-0.5">Diversas Datas</p>
                             
                             <div class="h-px bg-slate-500/60 w-full mt-3"></div>
                         </div>
@@ -507,7 +524,11 @@
             currentWeekNumber = getISOWeekNumber(today);
             
             document.getElementById('weekNumber').value = currentWeekNumber;
-            document.getElementById('reposicaoData').value = today.toISOString().split('T')[0];
+            const todayStr = today.toISOString().split('T')[0];
+            document.getElementById('data_caixa1').value = todayStr;
+            document.getElementById('data_caixa2').value = todayStr;
+            document.getElementById('data_caixa3').value = todayStr;
+            document.getElementById('data_caixa4').value = todayStr;
             
             renderDaysForm();
             updateAlvosOptions();
@@ -745,7 +766,10 @@
                 aplicadorCustom: document.getElementById('aplicadorCustom').value,
                 days: {},
                 
-                reposicaoData: document.getElementById('reposicaoData').value,
+                dataCaixa1: document.getElementById('data_caixa1').value,
+                dataCaixa2: document.getElementById('data_caixa2').value,
+                dataCaixa3: document.getElementById('data_caixa3').value,
+                dataCaixa4: document.getElementById('data_caixa4').value,
                 volumeCaixa1: document.getElementById('volume_caixa1').value,
                 volumeCaixa2: document.getElementById('volume_caixa2').value,
                 volumeCaixa3: document.getElementById('volume_caixa3').value,
@@ -807,7 +831,11 @@
                     }
                     if(data.aplicadorCustom) document.getElementById('aplicadorCustom').value = data.aplicadorCustom;
 
-                    if(data.reposicaoData) document.getElementById('reposicaoData').value = data.reposicaoData;
+                    if(data.dataCaixa1) document.getElementById('data_caixa1').value = data.dataCaixa1;
+                    if(data.dataCaixa2) document.getElementById('data_caixa2').value = data.dataCaixa2;
+                    if(data.dataCaixa3) document.getElementById('data_caixa3').value = data.dataCaixa3;
+                    if(data.dataCaixa4) document.getElementById('data_caixa4').value = data.dataCaixa4;
+                    
                     if(data.volumeCaixa1) document.getElementById('volume_caixa1').value = data.volumeCaixa1;
                     if(data.volumeCaixa2) document.getElementById('volume_caixa2').value = data.volumeCaixa2;
                     if(data.volumeCaixa3) document.getElementById('volume_caixa3').value = data.volumeCaixa3;
@@ -895,7 +923,12 @@
             const today = new Date();
             currentWeekNumber = getISOWeekNumber(today);
             document.getElementById('weekNumber').value = currentWeekNumber;
-            document.getElementById('reposicaoData').value = today.toISOString().split('T')[0];
+            const todayStr = today.toISOString().split('T')[0];
+            
+            document.getElementById('data_caixa1').value = todayStr;
+            document.getElementById('data_caixa2').value = todayStr;
+            document.getElementById('data_caixa3').value = todayStr;
+            document.getElementById('data_caixa4').value = todayStr;
             
             document.getElementById('volume_caixa1').value = "100";
             document.getElementById('volume_caixa2').value = "100";
@@ -1045,6 +1078,14 @@
             lucide.createIcons();
         }
 
+        function toggleCheckbox(checkboxId) {
+            const cb = document.getElementById(checkboxId);
+            cb.checked = !cb.checked;
+            cb.dispatchEvent(new Event('change'));
+            toggleDayFields(checkboxId.replace('check_', ''));
+            updatePreview();
+        }
+
         function toggleDayFields(dayId) {
             const checkbox = document.getElementById(`check_${dayId}`);
             const fieldsContainer = document.getElementById(`fields_${dayId}`);
@@ -1140,8 +1181,6 @@
         let preparedShareData = null;
 
         function updateReposicaoPreview() {
-            const dataVal = document.getElementById('reposicaoData').value;
-            
             const active1 = document.getElementById('check_caixa1').checked;
             const active2 = document.getElementById('check_caixa2').checked;
             const active3 = document.getElementById('check_caixa3').checked;
@@ -1152,24 +1191,29 @@
             const vol3 = document.getElementById('volume_caixa3').value || '100';
             const vol4 = document.getElementById('volume_caixa4').value || '100';
 
+            const dVal1 = document.getElementById('data_caixa1').value;
+            const dVal2 = document.getElementById('data_caixa2').value;
+            const dVal3 = document.getElementById('data_caixa3').value;
+            const dVal4 = document.getElementById('data_caixa4').value;
+
+            const dateStr1 = dVal1 ? dVal1.split('-').reverse().join('/') : '--/--/----';
+            const dateStr2 = dVal2 ? dVal2.split('-').reverse().join('/') : '--/--/----';
+            const dateStr3 = dVal3 ? dVal3.split('-').reverse().join('/') : '--/--/----';
+            const dateStr4 = dVal4 ? dVal4.split('-').reverse().join('/') : '--/--/----';
+
             const prods1 = getProductsData('produtos_caixa1');
             const prods2 = getProductsData('produtos_caixa2');
             const prods3 = getProductsData('produtos_caixa3');
             const prods4 = getProductsData('produtos_caixa4');
             
-            let dateStr = "--/--/----";
-            if(dataVal) {
-                const parts = dataVal.split('-');
-                dateStr = `${parts[2]}/${parts[1]}/${parts[0]}`;
-            }
-
-            document.getElementById('previewRepDateText').innerText = `Data: ${dateStr}`;
+            document.getElementById('previewRepDateText').innerText = `Diversas Datas`;
             
-            document.getElementById('previewRepCaixa1Title').innerText = `Caixa 01 (${vol1}L)`;
-            document.getElementById('previewRepCaixa2Title').innerText = `Caixa 02 (${vol2}L)`;
-            document.getElementById('previewRepCaixa3Title').innerText = `Caixa 03 (${vol3}L)`;
-            document.getElementById('previewRepCaixa4Title').innerText = `Caixa 04 (${vol4}L)`;
+            document.getElementById('previewRepCaixa1Title').innerText = `Caixa 01 (${vol1}L) - ${dateStr1}`;
+            document.getElementById('previewRepCaixa2Title').innerText = `Caixa 02 (${vol2}L) - ${dateStr2}`;
+            document.getElementById('previewRepCaixa3Title').innerText = `Caixa 03 (${vol3}L) - ${dateStr3}`;
+            document.getElementById('previewRepCaixa4Title').innerText = `Caixa 04 (${vol4}L) - ${dateStr4}`;
 
+            // Controle de visibilidade das caixas no preview
             document.getElementById('container_previewRepCaixa1').classList.toggle('hidden', !active1);
             document.getElementById('container_previewRepCaixa2').classList.toggle('hidden', !active2);
             document.getElementById('container_previewRepCaixa3').classList.toggle('hidden', !active3);
@@ -1185,12 +1229,21 @@
             document.getElementById('previewRepCaixa3').innerHTML = formatCaixaHTML(prods3);
             document.getElementById('previewRepCaixa4').innerHTML = formatCaixaHTML(prods4);
 
-            let textToShare = `*Reposição de Adubação ${dateStr}*`;
+            let activeDates = [];
+            if (active1 && dateStr1 !== '--/--/----') activeDates.push(dateStr1);
+            if (active2 && dateStr2 !== '--/--/----') activeDates.push(dateStr2);
+            if (active3 && dateStr3 !== '--/--/----') activeDates.push(dateStr3);
+            if (active4 && dateStr4 !== '--/--/----') activeDates.push(dateStr4);
+            
+            let uniqueDates = [...new Set(activeDates)];
+            let dataTexto = uniqueDates.length === 1 ? uniqueDates[0] : (uniqueDates.length > 1 ? "Diversas Datas" : "");
+
+            let textToShare = `*Reposição de Adubação ${dataTexto}*`.trim();
 
             if (currentTab === 'reposicao') {
                 preparedShareData = {
-                    shareText: textToShare.trim(),
-                    filename: `Reposicao_Adubo_${dateStr.replace(/\//g, '-')}.png`
+                    shareText: textToShare,
+                    filename: `Reposicao_Adubo.png`
                 };
             }
 
@@ -1378,34 +1431,29 @@
                     diasAtivos: diasAtivos
                 };
             } else {
-                const dataVal = document.getElementById('reposicaoData').value;
-                let dateStr = "";
-                if(dataVal) {
-                    const parts = dataVal.split('-');
-                    dateStr = `${parts[2]}/${parts[1]}/${parts[0]}`;
-                }
-
                 let itensReposicao = [];
-            [1, 2, 3, 4].forEach(i => {
-                if(document.getElementById(`check_caixa${i}`).checked) {
-                    const prods = getProductsData(`produtos_caixa${i}`);
-                    const volume = document.getElementById(`volume_caixa${i}`).value || '100';
-                    
-                    prods.forEach(p => {
-                        itensReposicao.push({
-                            caixa: `Caixa 0${i}`,
-                            volume: volume,
-                            produto: p.name,
-                            quantidade: p.dose,
-                            unidade: p.unit
+                [1, 2, 3, 4].forEach(i => {
+                    if(document.getElementById(`check_caixa${i}`).checked) {
+                        const prods = getProductsData(`produtos_caixa${i}`);
+                        const volume = document.getElementById(`volume_caixa${i}`).value || '100';
+                        const dVal = document.getElementById(`data_caixa${i}`).value;
+                        const dateStr = dVal ? dVal.split('-').reverse().join('/') : '';
+                        
+                        prods.forEach(p => {
+                            itensReposicao.push({
+                                caixa: `Caixa 0${i}`,
+                                dataReposicao: dateStr,
+                                volume: volume,
+                                produto: p.name,
+                                quantidade: p.dose,
+                                unidade: p.unit
+                            });
                         });
-                    });
-                }
-            });
+                    }
+                });
 
-            payload = {
+                payload = {
                     tipo: "reposicao",
-                    dataReposicao: dateStr,
                     itensReposicao: itensReposicao
                 };
             }
