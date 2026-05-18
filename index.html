@@ -1393,20 +1393,19 @@
                     const dayId = dayName.toLowerCase().split('-')[0];
                     const checkbox = document.getElementById(`check_${dayId}`);
                     if (checkbox && checkbox.checked) {
-                    const dateForDay = new Date(monday);
-                    dateForDay.setDate(monday.getDate() + index);
+                        const dateForDay = new Date(monday);
+                        dateForDay.setDate(monday.getDate() + index);
 
-                    const prods = getProductsData(`produtos_${dayId}`);
-                    const produtosStr = prods.map(p => `[${p.type}] ${p.name} (${p.dose}${p.unit})`).join('\n');
+                        const prods = getProductsData(`produtos_${dayId}`);
 
-                    diasAtivos.push({
+                        diasAtivos.push({
                             dataAplicacao: dateForDay.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }),
                             nomeDia: dayName,
                             setor: document.getElementById(`setores_${dayId}`).value,
                             estufa: document.getElementById(`estufa_${dayId}`).value,
                             inicio: document.getElementById(`horario_inicio_${dayId}`).value,
                             fim: document.getElementById(`horario_fim_${dayId}`).value,
-                            produtos: produtosStr,
+                            produtos: prods,
                             alvo: document.getElementById(`alvo_${dayId}`).value
                         });
                     }
