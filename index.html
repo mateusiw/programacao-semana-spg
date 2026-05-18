@@ -503,9 +503,9 @@
 
     <script>
         const dbProducts = {
-            "Multiplicação": ["Açúcar", "Antiespumantes", "Azototal", "Bac-in", "Bioimpeto", "Bravo", "Crystal BT", "Fung-in", "Kilper-S", "Optimun", "Supress - H"],
-            "Adubação": ["Adubo Orgânico", "Calcário", "Cloreto de Potássio", "Complex 12-11-18", "Esterco", "MAP", "Nitrato de Amônio", "Nitrato de Cálcio", "NKálcio 09-00-24", "NPK 04-14-08", "NPK 10-10-10", "NPK 20-05-20", "NPK 20-10-20", "NPK 6-24-12", "Superfosfato Simples", "Superfosfato Triplo", "Sulfato de Amônio", "Ureia", "Yara Bela 16-05-20", "Yara Bela 27-00-00 (Nitrato de Amônia)", "YaraBasa", "YaraMila"],
-            "Fito": ["Acadian", "Ácido Peracético", "Alexia", "Alliado", "Avatar", "Azospirilium", "Beauveria", "BioProtect", "Boro", "Bicarbonato", "Caltrac", "Carbon N-10", "CalPlant", "Cabrio Top", "Coda Sul PH", "Coptrac", "Crystal-BT", "Detergente", "Dipel", "Durivo", "Eleito", "Elexa", "Evidence", "Ferro", "Full Grow", "Facility", "Joiner", "Karate", "Kasumin", "Lannate", "Leite de Vaca", "Mancozeb", "Manipueira", "MAP (Monoamônio Fosfato)", "Master Mix", "Melaço", "Metarhizium", "Miravis Duo", "MKP (Monofosfato de Potássio)", "Molibdato", "Mukussan", "Nitrato de Potássio", "Octaborato", "Óleo Vegetal", "Óleo Vegetal Speed", "Orthocide", "Premio", "Ridomil", "Shenzi", "Score", "Sanmite", "Speed Dil", "Speed Oil", "Sulfato de Magnésio", "Sulfato de Potássio", "Timorex", "Trichoderma", "Trichodermil", "Vinagre", "Vertimec", "Xixi", "YaraVita - Biotrac", "YaraVita - Bortrac", "YaraVita - Caltrac", "YaraVita - Gotamax", "YaraVita - Zintrac", "Ziel"]
+            "Multiplicação": ["Açúcar", "Açúcar Mascavo", "Antiespumantes", "Azototal", "Bac-in", "Bioimpeto", "Bravo", "Crystal BT", "Fung-in", "Kilper-S", "Optimun", "Supress - H"],
+            "Adubação": ["Adubo Orgânico", "Açúcar Mascavo", "Calcário", "Cloreto de Potássio", "Complex 12-11-18", "Esterco", "MAP", "Nitrato de Amônio", "Nitrato de Cálcio", "NKálcio 09-00-24", "NPK 04-14-08", "NPK 10-10-10", "NPK 20-05-20", "NPK 20-10-20", "NPK 6-24-12", "Superfosfato Simples", "Superfosfato Triplo", "Sulfato de Amônio", "Ureia", "Yara Bela 16-05-20", "Yara Bela 27-00-00 (Nitrato de Amônia)", "YaraBasa", "YaraMila"],
+            "Fito": ["Acadian", "Ácido Peracético", "Açúcar Mascavo", "Alexia", "Alliado", "Avatar", "Azospirilium", "Beauveria", "BioProtect", "Boro", "Bicarbonato", "Caltrac", "Carbon N-10", "CalPlant", "Cabrio Top", "Coda Sul PH", "Coptrac", "Crystal-BT", "Detergente", "Dipel", "Durivo", "Eleito", "Elexa", "Evidence", "Ferro", "Full Grow", "Facility", "Joiner", "Karate", "Kasumin", "Lannate", "Leite de Vaca", "Mancozeb", "Manipueira", "MAP (Monoamônio Fosfato)", "Master Mix", "Melaço", "Metarhizium", "Miravis Duo", "MKP (Monofosfato de Potássio)", "Molibdato", "Mukussan", "Nitrato de Potássio", "Octaborato", "Óleo Vegetal", "Óleo Vegetal Speed", "Orthocide", "Premio", "Ridomil", "Shenzi", "Score", "Sanmite", "Speed Dil", "Speed Oil", "Sulfato de Magnésio", "Sulfato de Potássio", "Timorex", "Trichoderma", "Trichodermil", "Vinagre", "Vertimec", "Xixi", "YaraVita - Biotrac", "YaraVita - Bortrac", "YaraVita - Caltrac", "YaraVita - Gotamax", "YaraVita - Zintrac", "Ziel"]
         };
 
         const dbAlvos = {
@@ -1265,7 +1265,7 @@
 
             const previewContainer = document.getElementById('previewContent');
             let previewHtml = '';
-            let textToShare = `*Aplicações da Semana ${weekNumber}*`;
+            let textToShare = `*Programação da Semana ${weekNumber}*`;
 
             let hasAnyContent = false;
 
@@ -1341,15 +1341,6 @@
                             </div>
                         </div>
                     `;
-
-                    textToShare += `\n*${dayLabel}*\n`;
-                    if (setores || estufa) textToShare += `📍 Setor/Estufa: ${setores || '--'} / ${estufa || '--'}\n`;
-                    if (horario) textToShare += `⏰ Horário: ${horario}\n`;
-                    textToShare += `🎯 Alvo: ${alvo || '--'}\n`;
-                    prods.forEach(p => {
-                        textToShare += `🛡️ [${p.type || '-'}] ${p.name} (${p.dose}${p.unit})\n`;
-                    });
-                    textToShare += `----------------\n`;
                 }
             });
 
